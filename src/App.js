@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
-
 import {Row} from 'react-bootstrap'
-
 import NavbarTop from './contains/NavbarTop/NavbarTop'
-
 import NavbarBottom from "./contains/NavbarBottom/NavbarBottom";
 
 
