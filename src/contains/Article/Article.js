@@ -107,7 +107,7 @@ export default class Article extends React.Component{
                     <NavItem eventKey="vue" href="" id={"avue"}>vue</NavItem>
                     <NavItem eventKey="angular" href="" id={"aangular"}>angular</NavItem>
                     <NavItem eventKey="cpp" href="" id={"acpp"}>C和C++</NavItem>
-                    <NavItem eventKey="hardware" href="" id={"ahardware"}>硬件</NavItem>
+                    <NavItem eventKey="hardware" href="" id={"ahardware"}>数据结构和算法</NavItem>
                     <NavItem eventKey="other" href="" id={"aother"}>其它杂碎</NavItem>
                 </Nav>
 

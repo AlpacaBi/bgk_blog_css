@@ -181,6 +181,7 @@ export default class MessageBroad extends React.Component{
         let username=this.state.user_data[0].username
         let avatar=this.state.user_data[0].avatar
         let message=this.message.value
+        message=encodeURIComponent(message)
 
         let url = "/apis/pushMessage";//接口地址
         let data = 'userID=' + userID + '&username=' + username+'&avatar=' + avatar+'&message=' + message;
