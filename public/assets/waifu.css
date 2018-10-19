@@ -1,14 +1,16 @@
 body{
-    background: url(bg.jpg) no-repeat center 0px;
-    background-position: center 0;
-    background-size: cover;
-    padding-top: 65px;
-    padding-bottom: 65px;
-    padding-left:0;
-    overflow-y:scroll;
-    overflow-x:hidden;
     cursor:url(finger.cur),auto;
+    margin: 0;
+    padding: 0;
+    background: #454545;
+    line-height: 1.7;
+    width:100%;
+    height:100%;
+    overflow:scroll;
+    overflow-x:hidden;
 }
+
+
 
 hr{
     height:1px;border:none;border-top:1px solid black;
@@ -19,7 +21,6 @@ hr{
     width: 150px ;height:25px;
     bottom: 60px;
     right: 320px;
-    z-index: 10001;
     transition: all .3s ease-in-out;
     -webkit-transform: translateY(3px);
     transform: translateY(3px);
@@ -40,7 +41,7 @@ hr{
     position: fixed;
     bottom: 0;
     right: 0;
-    z-index: 10000;
+    z-index: 999999;
     font-size: 0;
     transition: all .3s ease-in-out;
     -webkit-transform: translateY(3px);
@@ -56,6 +57,7 @@ hr{
     }
 }
 .waifu-tips {
+    z-index: 999999999;
     opacity: 0;
     width: 250px;
     height: 100px;

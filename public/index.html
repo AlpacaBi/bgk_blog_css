@@ -2,24 +2,60 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#000000">
 
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
     <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
-
-
+    <link rel="stylesheet" href="assets/demo.css" />
     <link rel="stylesheet" type="text/css" href="assets/waifu.css"/>
-    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="assets/jquery-3.2.1.min.js"></script>
 
 
-    <title>毕国康的博客_React</title>
-
+    <title>毕国康的博客</title>
+    <script src="assets/jquery-3.2.1.min.js"></script>
 
 
   </head>
 
   <body>
+
+  <style>
+
+    @media screen and (max-width: 767px) {
+    #talk {
+      display: none
+    }
+
+    #uploadForm {
+      display: none
+    }
+  }
+
+
+    @media screen and (width: 768px) and (orientation: portrait){
+      #talk {
+        display: none
+      }
+
+      #uploadForm {
+        display: none
+      }
+    }
+
+    @media screen and (width: 768px) and (orientation: landscape){
+      #talk {
+        display: block;
+      }
+
+      #uploadForm {
+        display: block;
+      }
+    }
+
+
+
+  </style>
 
 
     <div id="root"></div>
@@ -32,32 +68,16 @@
 
     <div class="waifu">
       <div class="waifu-tips"></div>
-
-      <canvas id="live2d" width="320" height="280" class="live2d"></canvas>
-      <!--彩蛋在这里，去掉这段注释，即可开启换装功能<div class="waifu-tool">
-        <span class="fui-home"></span>
-        <span class="fui-chat"></span>
-        <span class="fui-eye"></span>
-        <span class="fui-user"></span>
-        <span class="fui-photo"></span>
-        <span class="fui-info-circle"></span>
-        <span class="fui-cross"></span>
-      </div>-->
-
+      <canvas id="live2d" width="350" height="320" class="live2d"></canvas>
     </div>
 
 
-<script>
+    <div id="particles-js"></div>
 
 
-
-</script>
-
-
-
-
-
-
+    <script type="text/javascript" src="assets/runtime.js"></script>
+    <script type="text/javascript" src="assets/particles.js"></script>
+    <script type="text/javascript" src="assets/app.js"></script>
     <script src="assets/waifu-tips.js"></script>
     <script src="assets/live2d.js"></script>
     <script type="text/javascript">initModel("assets/")</script>

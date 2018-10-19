@@ -1,73 +1,69 @@
 import React from 'react'
+import '../../css/Article/Article.css'
+import {withRouter} from 'react-router-dom'
+import Select from 'react-select'
 
-import {Nav, NavItem,ListGroup,ListGroupItem,Col,Row,Panel} from 'react-bootstrap'
+import loading from '../../images/loading.gif'
 
-
-
+const options = [
+    { value: 'all', label: '所有文章' },
+    { value: 'javascript', label: 'JavaScript和ES6' },
+    { value: 'java', label: 'Java和Java框架' },
+    { value: 'htmlcss', label: 'HTML&CSS' },
+    { value: 'react', label: 'React' },
+    { value: 'vue', label: 'Vue' },
+    { value: 'angular', label: 'Angular' },
+    { value: 'cpp', label: 'C和C++' },
+    { value: 'data', label: '数据结构和算法' },
+    { value: 'other', label: '其他杂碎' }
+];
 
 
 
 export default class Article extends React.Component{
 
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state=({
             data:[],
             a_data:[],
-            tab:''
+            selectedOption: null,
+            searstate:false
         })
     }
 
     componentDidMount(){
         this.getArticleListData('all');
-        this.setState({tab:'所有文章：'});
+        this.setState({selectedOption:{ value: 'all', label: '所有文章' }})
     }
 
-
-    getArticles=(id)=>{
-        fetch('/apis/getArticles?id='+id,
-            {
-                method: "GET",
-                credentials: 'include',
-            })
-            .then((res)=>{
-                return res.json()
-            }).then((json)=>{
-            this.setState({
-                a_data:eval(json)
-            })
-        })
-
+    getArticle=(id)=>{
+        this.props.history.push('/article/'+id)
     }
 
-
-
-    handleSelect=(selectedKey) =>{
-        switch (selectedKey){
-            case 'all':
-                this.setState({tab:'所有文章：'}); break;
+    typename=(key) =>{
+        let typen;
+        switch (key){
             case 'javascript':
-                this.setState({tab:'javascript和es6：'}); break;
+                typen='JavaScript和ES6'; break;
             case 'java':
-                this.setState({tab:'java和java框架：'}); break;
+                typen='Java和Java框架'; break;
             case 'htmlcss':
-                this.setState({tab:'html&css：'}); break;
+                typen='HTML&CSS'; break;
             case 'react':
-                this.setState({tab:'react：'}); break;
+                typen='React'; break;
             case 'vue':
-                this.setState({tab:'vue：'}); break;
+                typen='Vue'; break;
             case 'angular':
-                this.setState({tab:'angular：'}); break;
+                typen='Angular'; break;
             case 'cpp':
-                this.setState({tab:'C和C++：'}); break;
-            case 'hardware':
-                this.setState({tab:'硬件：'}); break;
+                typen='C和C++'; break;
+            case 'data':
+                typen='数据结构和算法'; break;
             case 'other':
-                this.setState({tab:'其他杂碎：'}); break;
-
+                typen='其他杂碎'; break;
         }
-        this.getArticleListData(selectedKey);
-
+        return typen
     }
 
     getArticleListData=(tabid)=>{
@@ -82,73 +78,120 @@ export default class Article extends React.Component{
             this.setState({
                 data:eval(json)
             })
-            if(this.state.data.length>0){
-                this.getArticles(this.state.data[0].ID)
-            }else{
-                this.setState({
-                    a_data:[]
-                })
-            }
         })
     }
 
 
+    handleChange = (selectedOption) => {
+        this.setState({ selectedOption });
+        this.getArticleListData(selectedOption.value);
+    }
+
+
+
+
 
     render(){
+
+        const { selectedOption } = this.state;
+
+
         return(
-
             <div>
-                <Nav bsStyle="pills" bsStyle="primary" justified onSelect={this.handleSelect} >
-                    <NavItem eventKey="all" href="" id={"aall"}><b>所有文章</b></NavItem>
-                    <NavItem eventKey="javascript" href="" id={"ajavascript"}>javascript和es6</NavItem>
-                    <NavItem eventKey="java" href="" id={"ajava"}>java和java框架</NavItem>
-                    <NavItem eventKey="htmlcss" href="" id={"ahtmlcss"}>html&css</NavItem>
-                    <NavItem eventKey="react" href="" id={"areact"}>react</NavItem>
-                    <NavItem eventKey="vue" href="" id={"avue"}>vue</NavItem>
-                    <NavItem eventKey="angular" href="" id={"aangular"}>angular</NavItem>
-                    <NavItem eventKey="cpp" href="" id={"acpp"}>C和C++</NavItem>
-                    <NavItem eventKey="hardware" href="" id={"ahardware"}>数据结构和算法</NavItem>
-                    <NavItem eventKey="other" href="" id={"aother"}>其它杂碎</NavItem>
-                </Nav>
+                <div className={'articless'}>
+                <div className={"article_sidebar"}>
+                    <div className={"article_sidebar_type_name"}>分类</div>
+                    <div className={"title_list"}>
+                        <div className={"title_list_item"}
+                             onClick={()=>this.getArticleListData('all')}
+                             id={'aall'}>所有文章</div>
+                        <div className={"title_list_item"}
+                             onClick={()=>this.getArticleListData('javascript')}
+                             id={'ajavascript'}>JavaScript和ES6</div>
+                        <div className={"title_list_item"}
+                             onClick={()=>this.getArticleListData('htmlcss')}
+                             id={'ahtmlcss'}>HTML&CSS</div>
+                        <div className={"title_list_item"}
+                             onClick={()=>this.getArticleListData('react')}
+                             id={'areact'}>React</div>
+                        <div className={"title_list_item"}
+                             onClick={()=>this.getArticleListData('vue')}
+                             id={'avue'}>Vue</div>
+                        <div className={"title_list_item"}
+                             onClick={()=>this.getArticleListData('angular')}
+                             id={'aangular'}>Angular</div>
+                        <div className={"title_list_item"}
+                             onClick={()=>this.getArticleListData('java')}
+                             id={'ajava'}>Java和Java框架</div>
+                        <div className={"title_list_item"}
+                             onClick={()=>this.getArticleListData('cpp')}
+                             id={'acpp'}>C和C++</div>
+                        <div className={"title_list_item"}
+                             onClick={()=>this.getArticleListData('data')}
+                             id={'adata'}>数据结构和算法</div>
+                        <div className={"title_list_item"}
+                             onClick={()=>this.getArticleListData('other')}
+                             id={'aother'}>其他杂碎</div>
+                        <div className={"title_list_item"}
+                             onClick={()=>this.getArticleListData('all')}style={{visibility:'hidden'}}>...</div>
+                    </div>
+                </div>
 
 
 
 
-                <Row>
-                    <Col smOffset={1} sm={2} >
-
-                        <h3 style={{textAlign:'center'}}>{this.state.tab}</h3><hr/>
-
-                        <Panel collapsible defaultExpanded header="Panel heading">
-                <ListGroup style={{textAlign:'center'}}>
-                    {this.state.data.length>0?this.state.data.map((item,index)=>(
-                        <ListGroupItem onClick={()=>this.getArticles(item.ID)} key={index}>{index+1}.<div className={"artt"} style={{textAlign:'center'}}>{item.article_title}</div></ListGroupItem>
-                    )):<div><h2>加载中。。。</h2></div>}
-                </ListGroup>
-                        </Panel>
-                    </Col>
-
-
-
-                    <Col sm={6} >
-                        <h3 style={{textAlign:'center'}}>博客正文：</h3><hr/>
-                        {this.state.a_data.length>0?this.state.a_data.map((item,index)=>(
-                            <div key={index} >
-                                <h1>{item.article_title}</h1><br/>
-                                <h5>发表于：{item.article_push_time}</h5><br/>
-                                <h4>{item.article_summary}</h4><br/>
-                                <div dangerouslySetInnerHTML={{__html:item.article_context}}></div>
-                                <br/>
-
-
+                <div className={"article_main"}>
+                    <div className={"article_main_list"}>
+                        {this.state.data.length>0?this.state.data.map((item,index)=>(
+                            <div className={"item"} onClick={()=>this.getArticle(item.ID)} key={index}>
+                                <a  className={"title"} >{item.article_title}</a>
+                                <div className={"status"}>发布于：{item.article_push_time} | 分类：{this.typename(item.article_type)}</div>
+                                <div className={"content"}>
+                                    {item.article_summary}
+                                </div>
                             </div>
-                            )):<div><h2>加载中。。。</h2></div>}
-                    </Col>
+                        )):<div style={{width:'100%',textAlign:'center',paddingTop:'25px'}}><img src={loading} width={'25%'}/></div>}
+                    </div>
+                </div>
+                </div>
 
-                </Row>
+
+                <div className={'mo-articless'} style={{marginTop:60}}>
+                    <Select
+                        className={'sele'}
+                        value={selectedOption}
+                        onChange={this.handleChange}
+                        options={options}
+                        isSearchable={this.state.searstate}
+                    />
+
+                    <div className={"article-list"}>
+                        {this.state.data.length>0?this.state.data.map((item,index)=>(
+                        <div className={"item"} onClick={()=>this.getArticle(item.ID)} key={index}>
+                            <a className={"title"}>{item.article_title}</a>
+                            <div className={"status"}>发布于：{item.article_push_time} | 分类：{this.typename(item.article_type)}</div>
+                        </div>)):
+                            <div style={{width:'100%',textAlign:'center',paddingTop:'10px'}}><img src={loading} width={'50%'}/></div>}
+
+
+
+                        <div className={"item"} style={{visibility:'hidden'}}>
+                            <a className={"title"}>hahahahahahaha</a>
+                            <div className={"status"}>发布于：hahahahahahaha</div>
+                        </div>
+                    </div>
+                </div>
+
+
             </div>
+
+
+
 
         )
     }
 
 }
+
+withRouter(Article)
+

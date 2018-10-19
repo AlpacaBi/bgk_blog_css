@@ -2,11 +2,15 @@
     "mouseover": [
         {
             "selector": ".container a[href^='http']",
-            "text": ["欢迎来到 <span style=\"color:#0099cc;\">{text}</span> "]
+            "text": ["欢迎来到 <span style=\"color:#990033;\">{text}</span> "]
         },
         {
-            "selector": ".artt",
-            "text": ["点击这里就可阅读 <span style=\"color:#0099cc;\">{text}</span> "]
+            "selector": ".title",
+            "text": ["点击这里就可阅读 <span style=\"color:#990033;\">{text}</span> "]
+        },
+        {
+            "selector": "#shareid",
+            "text": ["点击这里就可阅读 <span style=\"color:#990033;\">{text}</span> "]
         },
         {
             "selector": "#fui-home",
@@ -19,6 +23,14 @@
         {
             "selector": "#fui-messageborad",
             "text": ["点击这里看留言哦，希望你也写点留言吧"]
+        },
+        {
+            "selector": "#fui-weekshare",
+            "text": ["点击这里就能看每周分享了"]
+        },
+        {
+            "selector": "#fui-lab",
+            "text": ["这里有一堆稀奇古怪的东西"]
         },
         {
             "selector": "#fui-backstage",
@@ -49,10 +61,6 @@
             "text": ["一个国内大佬写的富文本框，主人就是用这个来写博客的，欢迎入群725634541"]
         },
         {
-            "selector": "#money",
-            "text": ["各位大佬施舍个鼠粮钱吧，主人家还有一只仓鼠要养"]
-        },
-        {
             "selector": "#bgkmessage",
             "text": ["如果想联系毕国康，点这里"]
         },
@@ -66,11 +74,15 @@
         },
         {
             "selector": "#fui-weixin",
-            "text": ["大佬们可以加主人的微信一起聊聊技术"]
+            "text": ["大佬们可以加主人的微信一起聊聊技术,点击弹出二维码"]
         },
         {
             "selector": "#newArt",
             "text": ["这里你可以看到最新的10篇文章"]
+        },
+        {
+            "selector": "#pypy",
+            "text": ["各位大佬施舍个鼠粮钱吧，主人家还有一只仓鼠要养"]
         },
         {
             "selector": "#beian",
@@ -90,11 +102,11 @@
         },
         {
             "selector": "#ajavascript",
-            "text": ["点这里主要着重于JavaScript和es6的研究，毕竟再酷炫的轮子也是基于js原生"]
+            "text": ["JavaScript是世界上最好的语言（手动滑稽）"]
         },
         {
             "selector": "#ajava",
-            "text": ["点这里可以看和java相关的内容，虽然主人他不怎么喜欢用java做后台"]
+            "text": ["点这里可以看和java相关的内容"]
         },
         {
             "selector": "#ahtmlcss",
@@ -110,23 +122,23 @@
         },
         {
             "selector": "#aangular",
-            "text": ["大轮子，虽然主人他学的很吃力，但是还是上了，不要指望这里有很多angular文章"]
+            "text": ["啊哈，我暂时没学过这个，暂时没文章"]
         },
         {
             "selector": "#acpp",
             "text": ["c语言和c++也是很重要的，毕竟以前玩嵌入式经常用到"]
         },
         {
-            "selector": "#ahardware",
-            "text": ["本人业余时间喜欢玩硬件，点这里可以看到各种单片机、开发板、zigbee节点、微型电脑等等"]
+            "selector": "#adata",
+            "text": ["在这里可以研究算法和数据结构"]
         },
         {
             "selector": "#reg",
-            "text": ["来吧，注册吧，毕国康他一个人自己在这里玩精分已经很惨了"]
+            "text": ["求你注册了！！！"]
         },
         {
             "selector": "#aother",
-            "text": ["这里是非技术区，给本人吹比用的"]
+            "text": ["这里有很多课外知识！！！！"]
         },
         {
             "selector": "#csubmit",
@@ -141,6 +153,10 @@
             "text": ["点击这里可以写留言哦！！！"]
         },
         {
+            "selector": "#updateinfo",
+            "text": ["点击这里可以修改你的个人信息哦！！！"]
+        },
+        {
             "selector": "#logout",
             "text": ["你要走了么？？？"]
         },
@@ -153,31 +169,63 @@
             "text": ["你可以选择微信支付，也可以选择支付宝，暂时不支持花呗支付哦"]
         },
         {
+            "selector": "#homename",
+            "text": ["毕国康"]
+        },
+        {
+            "selector": "#homeinfo",
+            "text": ["talk and code is cheap,show me the money"]
+        },
+        {
             "selector": "#touxiang",
-            "text": ["这忧郁的眼神，这帅气的脸庞，不管在什么地方就好像漆黑中的萤火虫一样，那样的鲜明，那样的出众"]
+            "text": ["主人的自拍"]
         },
         {
             "selector": "#uploadForm",
-            "text": ["主人为我添加了图像识别功能，发几张图片试试吧"]
+            "text": ["主人为我添加了图像识别功能，能识别图中人物，发几张图片试试吧"]
+        },
+
+        {
+            "selector": "#working",
+            "text": ["吔屎啦你~~"]
+        },
+        {
+            "selector": ".btn-vister",
+            "text": ["不想注册的可以点这里免登陆发言哦"]
+        },
+        {
+            "selector": ".loginss",
+            "text": ["账户和密码都要填哦，登录之前检查一下"]
+        },
+        {
+            "selector": "#vlogincom",
+            "text": ["其实不用登录也能评论的~~"]
+        },
+        {
+            "selector": "#logincom",
+            "text": ["登录之后评论吧！！！"]
         }
 
     ],
     "click": [
+
+        {
+            "selector": "#fui-weekshare",
+            "text": ["每周最新资讯都在这里，来涨姿势吧"]
+        },
+        {
+            "selector": "#fui-lab",
+            "text": ["这里还在施工中，开放指日可待"]
+        },
+
+
         {
             "selector": ".waifu #live2d",
             "text": ["不准摸，畜生", "雅蔑蝶", "再摸的话我可要报警了！", "110吗，这里有个变态一直在摸我","救命，这里有个变态！"]
         },
         {
-            "selector": "#fui-search",
-            "text": ["搜索功能还没做出来呢，正为这件事情头痛呢，大佬有什么建议可以在留言板提"]
-        },
-        {
-            "selector": "#fui-search-btn",
-            "text": ["都说还没做出来了，还按！！！"]
-        },
-        {
             "selector": "#fui-messageborad",
-            "text": ["留言板里面的老哥个个都是人才，说话又好听，超喜欢在里面的"]
+            "text": ["交流区里面的老哥个个都是人才，说话又好听，超喜欢在里面的"]
         },
         {
             "selector": "#fui-article",
@@ -195,9 +243,14 @@
             "selector": "#reg",
             "text": ["哇哇，你居然点了，快注册！！！"]
         },
+
         {
-            "selector": ".artt",
-            "text": ["很好，你现在正在阅读 <span style=\"color:#0099cc;\">{text}</span> "]
+            "selector": "#shareid",
+            "text": ["很好，你现在正在阅读 <span style=\"color:#990033;\">{text}</span> "]
+        },
+        {
+            "selector": ".title",
+            "text": ["很好，你现在正在阅读 <span style=\"color:#990033;\">{text}</span> "]
         },
         {
             "selector": "#wirtemessage",
@@ -212,12 +265,28 @@
             "text": ["weeeeeee!留言成功！！！！"]
         },
         {
+            "selector": "#avcom",
+            "text": ["weeeeeee!评论成功！！！！"]
+        },
+        {
             "selector": "#touxiang",
-            "text": ["我去，左下角有只妹子你不摸去摸一只草泥马？？？"]
+            "text": ["哪怕你摸我的脸,我都是你这辈子无法得到的男人"]
+        },
+        {
+            "selector": "#msgfayan",
+            "text": ["weeeeeee!游客留言成功！！！！"]
+        },
+        {
+            "selector": "#nomsgfayan",
+            "text": ["伤心~~~"]
         },
         {
             "selector": "#talk",
             "text": ["主人为我加了聊天ai,和我聊天吧！！！"]
+        },
+        {
+            "selector": ".btn-vister",
+            "text": ["请务必留下你的大名和邮箱"]
         }
     ],"seasons": [
         {

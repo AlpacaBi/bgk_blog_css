@@ -228,6 +228,8 @@ button:active {
   width: 90%;
   background-color: white;
   color: #454545;
+  margin-top: 20px;
+  margin-left: 5%;
 }
 
 .btn-vister:hover, .btn-vister:focus {

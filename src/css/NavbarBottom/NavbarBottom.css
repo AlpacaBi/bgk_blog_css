@@ -1,0 +1,124 @@
+
+.footer{
+    background-color: black;
+    width: 100%;
+    height: 50px;
+    position:fixed;
+    left: 0px;
+    bottom: 0px;
+    z-index: 99999;
+
+}
+
+
+
+.footmsg{
+    color:white;text-align: center;
+}
+
+
+
+
+
+.mo-footer{
+    background-color: black;
+    width: 100%;
+    height: 60px;
+    position:fixed;
+    left: 0px;
+    bottom: 0px;
+    z-index: 99999;
+}
+
+
+
+.mo-footer .navbar{/*设置导航栏的框框*/
+    margin-top: 0;
+    padding: 0px;/*将框框的padding设置为零，不然会导致框框里的内容与框边缘有间隔*/
+}
+
+
+.mo-footer .navbar .icon-text{
+    text-align: center;
+    padding-left: 5px;
+    color: white;
+    font-size: 10px;
+    line-height: 1;
+}
+
+.mo-footer .navbar .icon-text img{
+    width:70%
+}
+
+.mo-footer .navbar li{
+    width: 25%;
+    list-style-type: none;/* 去掉li前的点 */
+    float: left;/*将li设置成做浮动，变为联动*/
+}
+
+.mo-footer .navbar li a{
+    -webkit-margin-end: 0;
+    -webkit-margin-start: 0;
+    display: block;/*将a变成块状*/
+    width: 80px;/*设置块的宽度*/
+    height: 60px;/*设置块的长度*/
+    font-family: Microsoft Yahei;
+    line-height: 50px;/*设置字体在块中的高度*/
+    margin: 2px 0px;/*块里的高宽通过margin设置*/
+    color: #fff;
+    text-align: center;/*字体居中*/
+    text-decoration: none;/*去掉下划线*/
+    font-size: 17px;
+}
+
+
+.mo-footer .navbar a:hover{
+    border-style: solid;
+    border-color:#454545;
+    height: 60px;
+}
+
+
+
+@media screen and (min-width: 769px){
+    .footer {
+        display: block;
+    }
+    .mo-footer{
+        display: none;
+    }
+}
+
+
+@media screen and (max-width: 767px){
+    .footer {
+        display: none;
+    }
+
+    .mo-footer{
+        display: block;
+    }
+}
+
+
+
+
+
+
+@media screen and (width: 768px) and (orientation: portrait){
+    .footer{
+        display: none;
+    }
+    .mo-footer{
+        display: block;
+    }
+}
+
+@media screen and (width: 768px) and (orientation: landscape){
+    .footer{
+        display: block;
+    }
+    .footer{
+        display: none;
+    }
+}

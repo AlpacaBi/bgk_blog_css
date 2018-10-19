@@ -1,0 +1,208 @@
+
+.articless .article_sidebar{
+    width: 20%;
+    height: 100%;
+    position:fixed;
+    left: 0px;
+
+    background: #8B8878;
+    opacity:0.85;
+    overflow:auto;
+}
+
+
+.articless .article_sidebar_type_name{
+    text-align: center;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 50px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background: #7A7A7A;
+    color: white;
+    font-size: 30px;
+}
+
+.articless .title_list_item{
+    background: #fff;
+    padding: 20px;
+    margin: 20px;
+
+
+    -moz-box-shadow:3px 3px 15px black;
+    -webkit-box-shadow:3px 3px 15px black;
+    box-shadow:3px 3px 15px black;
+}
+
+.articless .title_list_item:hover{
+
+    -moz-box-shadow:6px 6px 25px black;
+    -webkit-box-shadow:6px 6px 25px black;
+    box-shadow:6px 6px 25px black;
+}
+
+
+
+
+
+.articless .article_main{
+    width: 80%;
+    height: 100%;
+    margin-left: 20%;
+    padding-top: 30px;
+    padding-bottom: 60px;
+
+}
+
+
+
+.articless .article_main_list{
+
+    width:100%;
+}
+
+.articless .article_main_list .item  {
+    background: #fff;
+    padding: 20px;
+    opacity:0.85;
+
+
+    margin-left: 80px;
+    margin-right: 80px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+
+    -moz-box-shadow:5px 5px 20px black;
+    -webkit-box-shadow:5px 5px 20px black;
+    box-shadow:5px 5px 20px black;
+}
+
+.articless .article_main_list .item:hover{
+    transform: scale(1.04);
+}
+
+
+.articless .article_main_list .item .title,
+.articless .article .title {
+    color: #454545;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.articless .article_main_list .item .status,
+.articless .article .status {
+    font-size: 13px;
+    color: darkslategrey;
+}
+
+.articless .article_main_list .item > *,
+.articless .article > * {
+    margin: 10px 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.mo-articless  .sele{
+    margin-top: 10px;
+    margin-left: 2.5%;width: 95%;
+    border-radius: 4px;
+    box-shadow: 0 0 5px black;
+
+    color: black;
+    font-size: 25px;
+}
+
+.mo-articless .article-list{
+    margin-top: 10px;
+    width: 100%;
+
+}
+
+.mo-articless .article-list .item  {
+    background: #fff;
+    padding: 5%;
+    margin-left: 5%;
+    margin-bottom: 10px;
+    width: 90%;
+
+    opacity:0.85;
+
+    -moz-box-shadow:5px 5px 20px black;
+    -webkit-box-shadow:5px 5px 20px black;
+    box-shadow:5px 5px 20px black;
+}
+
+.mo-articless .article-list .item:hover{
+    transform: scale(1.04);
+}
+
+
+
+
+.mo-articless .article-list .item .title {
+    color: #454545;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1;
+}
+
+.mo-articless .article-list .item .status{
+    font-size: 10px;
+    color: darkslategrey;
+}
+
+.mo-articless .article-list .item > *{
+    margin: 10px 0;
+}
+
+
+
+@media screen and (min-width: 769px){
+    .articless{
+        display: block;
+    }
+    .mo-articless{
+        display: none;
+    }
+}
+
+@media screen and (max-width: 767px){
+    .articless{
+        display: none;
+    }
+    .mo-articless{
+        display: block;
+    }
+}
+
+
+
+
+@media screen and (width: 768px) and (orientation: portrait){
+    .articless{
+        display: none;
+    }
+    .mo-articless{
+        display: block;
+    }
+}
+
+@media screen and (width: 768px) and (orientation: landscape){
+    .articless{
+        display: block;
+    }
+    .mo-articless{
+        display: none;
+    }
+}

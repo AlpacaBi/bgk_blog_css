@@ -11,7 +11,7 @@ function doUpload() {
         type: 'POST',
         data: formData,
         dataType: 'json',
-        async: false,
+        async: true,
         cache: false,
         contentType: false,
         processData: false,
@@ -80,7 +80,31 @@ $('#talk').keydown(function(event) {
 var a_idx = 0;
 jQuery(document).ready(function($) {
     $("body").click(function(e) {
-        var a = new Array("+1s", "+1s", "+1s", "+1s", "+1s", "+1s", "+1s" ,"+1s", "+1s", "+1s", "+1s", "+1s");
+        var a = new Array(
+            "批判一番",
+            "我今天是作为一个长者跟你们讲",
+            "你问我兹不兹次,我是兹次的",
+            "提高自身的知识水平",
+            "香港记者",
+            "闷声大发财",
+            "这是坠吼的",
+            "不要想弄一个大新闻",
+            "无可奉告",
+            "不要“见着风，是得雨”啊",
+            "我身经百战，见的多了",
+            "谈笑风生",
+            "苟利国家生死以",
+            "岂因祸福避趋之",
+            "西方哪个国家我没去过",
+            "识得唔识得呀",
+            "too simple啊，sometimes naïve!",
+            "美国的华莱士",
+            "比你们高到不知哪里去了",
+            "我是身经百战了",
+            "钦点你当下任特首",
+            "背诵葛底斯堡演说",
+            "中央已经决定了,就由你来当接班人",
+            "你们还是另请高明吧，我实在也不是谦虚");
         var $i = $("<span/>").text(a[a_idx]);
         a_idx = (a_idx + 1) % a.length;
         var x = e.pageX,

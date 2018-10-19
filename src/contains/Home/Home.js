@@ -1,19 +1,29 @@
 import React from 'react'
-import {Modal,Panel,Row,Col,PanelGroup,Carousel,Image,Button} from 'react-bootstrap'
+import '../../css/Home/Home.css'
+import Modal from 'react-modal';
 
 import pic_touxiang          from '../../images/touxiang.png'
-import pic_react             from '../../images/carousel/react.png'
-import pic_react_redux       from '../../images/carousel/react-redux.png'
-import pic_react_bootstrap   from '../../images/carousel/react-bootstrap.png'
-import pic_react_router      from '../../images/carousel/react-router.png'
-import pic_express           from '../../images/carousel/express.png'
-import pic_braftediter       from '../../images/carousel/braftediter.png'
-
+import cao from '../../images/caonima.gif'
+import two from '../../images/two.jpg'
 import pay from '../../images/pay.png'
 
+import loading from '../../images/loading.gif'
 
 
+const customStyles = {
+    content : {
+        top                   : '50%',
+        left                  : '50%',
+        right                 : 'auto',
+        bottom                : 'auto',
+        marginRight           : '-50%',
+        transform             : 'translate(-50%, -50%)',
+        width:'500px'
+    }
+};
 
+
+Modal.setAppElement('#root')
 
 export default class Home extends React.Component{
 
@@ -22,15 +32,36 @@ export default class Home extends React.Component{
         super();
         this.state=({
             data:[],
-            showModal: false,
-            moneyModal: false,
-            textModal: false,
+            modalIsOpen: false,
+            modalIsOpen2: false,
             a_data:[]
         })
+        this.openModal = this.openModal.bind(this);
+        this.closeModal = this.closeModal.bind(this);
+
+        this.openModal2 = this.openModal2.bind(this);
+        this.closeModal2 = this.closeModal2.bind(this);
     }
     componentDidMount(){
         this.getHomeListData()
     }
+
+    openModal() {
+        this.setState({modalIsOpen: true});
+    }
+    closeModal() {
+        this.setState({modalIsOpen: false});
+    }
+
+
+    openModal2() {
+        this.setState({modalIsOpen2: true});
+    }
+    closeModal2() {
+        this.setState({modalIsOpen2: false});
+    }
+
+
 
     getHomeListData=()=>{
         fetch('/apis/homeArticleList',
@@ -47,194 +78,168 @@ export default class Home extends React.Component{
         })
     }
 
-    getArticles=(id)=>{
-        this.textOpen()
-        fetch('/apis/getArticles?id='+id,
-            {
-                method: "GET",
-                credentials: 'include',
-            })
-            .then((res)=>{
-                return res.json()
-            }).then((json)=>{
-            this.setState({
-                a_data:eval(json)
-            })
-        })
+    getArticle=(id)=>{
+        this.props.history.push('/article/'+id)
+    }
 
+    typename=(key) =>{
+        let typen;
+        switch (key){
+            case 'javascript':
+                typen='JavaScript和ES6'; break;
+            case 'java':
+                typen='Java和Java框架'; break;
+            case 'htmlcss':
+                typen='HTML&CSS'; break;
+            case 'react':
+                typen='React'; break;
+            case 'vue':
+                typen='Vue'; break;
+            case 'angular':
+                typen='Angular'; break;
+            case 'cpp':
+                typen='C和C++'; break;
+            case 'data':
+                typen='数据结构和算法'; break;
+            case 'other':
+                typen='其他杂碎'; break;
+        }
+        return typen
     }
 
 
-
-    close=()=>{this.setState({ showModal: false });}
-    open=()=>{this.setState({ showModal: true });}
-
-    textClose=()=>{this.setState({ textModal: false });}
-    textOpen=()=>{this.setState({ textModal: true });}
-
-    moneyClose=()=>{this.setState({ moneyModal: false });}
-    moneyOpen=()=>{this.setState({ moneyModal: true });}
-
     render(){
-
-
-
         return(
-
             <div>
 
-                <Row>
-                    <Col smOffset={1} sm={10} >
-                        <Carousel>
-                            <Carousel.Item>
-                                <a id={"creact"} href={'https://reactjs.org/'} target="_blank">
-                                    <img width={2600} height={596} alt='react' src={pic_react } />
-                                </a>
-                            </Carousel.Item>
-                            <Carousel.Item>
-                                <a id={"creactredux"} href={'https://www.npmjs.com/package/react-redux-self'} target="_blank">
-                                    <img width={2600} height={596} alt='react-redux' src={pic_react_redux} />
-                                </a>
-                            </Carousel.Item>
-                            <Carousel.Item>
-                                <a id={"creactbootstrap"} href={'https://react-bootstrap.github.io/'} target="_blank">
-                                <img width={2600} height={596} alt='react-bootstrap' src={pic_react_bootstrap} />
-                                </a>
-                            </Carousel.Item>
-                            <Carousel.Item>
-                                <a id={"creactrouter"} href={'https://www.npmjs.com/package/react-router'} target="_blank">
-                                <img width={2600} height={596} alt='react-router' src={pic_react_router} />
-                                </a>
-                            </Carousel.Item>
-                            <Carousel.Item>
-                                <a id={"cexpress"} href={'http://expressjs.com/'} target="_blank">
-                                <img width={2600} height={596} alt='express' src={pic_express} />
-                                </a>
-                            </Carousel.Item>
-                            <Carousel.Item>
-                                <a id={"cbraft"} href={'https://www.npmjs.com/package/braft-editor'} target="_blank">
-                                <img width={2600} height={596} alt='braft-editor' src={pic_braftediter } />
-                                </a>
-                            </Carousel.Item>
-                        </Carousel>
-                        <h4 style={{textAlign:'center'}}>↑本博客系统开发用到的框架和组件↑</h4>
+                <div width={"100%"} height={"100%"} className={"deskhome"}>
+                <div className={"side-bar"}>
+                        <div className={"header1"}>
+                            <img id={'touxiang'} className={"avatar"} src={pic_touxiang} width={"80%"} height={"80%"}/>
+                            <div id={'homename'} className={"logo_name"}>Alpaca Bi</div>
+                            <div id={'homeinfo'} className={"intro"}>talk and code is cheap,show me the money</div>
+                        </div>
+                        <div className={"contant"}>
+                            <div >工作微信：</div>
+                            <span><b id={"fui-weixin"} onClick={this.openModal}>workbiguokang</b></span>
 
-                    </Col>
-                </Row>
+                            <div>工作邮箱：</div>
+                            <span><b id={"fui-mailbox"}>biguokang@outlook.com</b></span>
 
-                <Row>
+                            <div>github：</div>
+                            <span><a id={"fui-github"} href={"https://github.com/biguokang"}
+                                     target={"_blank"}><b>https://github.com/biguokang</b></a></span>
+                        </div>
+                </div>
 
-                    <Col smOffset={1} sm={2}>
-                        <Image src={pic_touxiang} rounded responsive id={"touxiang"}/>
-                        <h3>Alpaca Bi</h3>
-                        <h5 style={{color:'grey'}}>talk and code is cheap，show me the money</h5>
-                        <Button
-                            id={"bgkmessage"}
-                            bsStyle="primary"
-                            onClick={this.open} block>
-                            联系本人
-                        </Button>
-                        <Button
-                            id={"money"}
-                            bsStyle="success"
-                            onClick={this.moneyOpen} block>
-                            给我打钱
-                        </Button>
-                    </Col>
-                    <Col  sm={6} >
+                    <div className={"caonima"} id={'pypy'} onClick={this.openModal2}>
+                        <img src={cao} width="100%"/>
+                        <div style={{textAlign:'center',color:'white'}}>求py交易，点击草泥马即可赞助我</div>
+                    </div>
 
-                        <h1 id={"newArt"}>最新文章：</h1>
-
-
-
-
-
-
-
-                        <PanelGroup accordion id="accordion-example" bsStyle="info">
+                <div className={'mains'}>
+                    <div className={'article-list'}>
+                        <div className={"home_alist"} id={'newArt'}>最新文章：</div>
+                        <div>
                             {this.state.data.length>0?this.state.data.map((item,index)=>(
-                            <Panel eventKey={index}>
-                                <Panel.Heading>
-                                    <Panel.Title toggle>{item.article_title}</Panel.Title>
-                                </Panel.Heading>
-                                <Panel.Body collapsible>
-                                    {item.article_summary}<hr/>
-                                    发表于：{item.article_push_time}<br/>
-                                    <a onClick={()=>this.getArticles(item.ID)}>阅读全文</a>
-
-                                </Panel.Body>
-                            </Panel>
-                            )):<div><h2>没有数据，快去写博客吧</h2></div>}
-                        </PanelGroup>
-                    </Col>
-                </Row>
+                                <div className={'item'} onClick={()=>this.getArticle(item.ID)}>
+                                    <a  className={"title"} >{item.article_title}</a>
+                                    <div className={"status"}>发布于：{item.article_push_time} | 分类：{this.typename(item.article_type)}</div>
+                                    <div className={"content"}>
+                                        {item.article_summary}
+                                    </div>
+                                </div>
+                            )):<div style={{width:'100%',textAlign:'center',paddingTop:'25px'}}><img src={loading} width={'25%'}/></div>}
+                        </div>
+                    </div>
+                </div>
 
 
+                    <Modal
+                        isOpen={this.state.modalIsOpen}
+                        onRequestClose={this.closeModal}
+                        style={customStyles}
+                        contentLabel="Example Modal"
+                    >
+                        <img src={two} style={{width:'90%',margin:'5%'}}/>
+                    </Modal>
 
-                <Modal show={this.state.moneyModal}  onHide={this.moneyClose}>
+                    <Modal
+                        isOpen={this.state.modalIsOpen2}
+                        onRequestClose={this.closeModal2}
+                        style={customStyles}
+                        contentLabel="Example Modal"
+                    >
+                        <img src={pay} style={{width:'95%',margin:'2.5%'}} id={'pay'}/>
+                    </Modal>
+            </div>
 
-                    <Modal.Header closeButton>
-                        <Modal.Title><b>Would you like to give 0.01 dollar to help put a hamster through college?</b>（南方公园梗，怕有人看不懂）
-                        </Modal.Title>
-                    </Modal.Header>
 
-                    <Modal.Body>
-                        <div style={{textAlign:'center'}}>
-                            <img src={pay} id={"pay"}/>
+                <div className={"mo-home"}>
+
+
+                    <div className={"bgkinfo"}>
+                        <div className={"item"}>
+                            <img className={"comment_pic"} src={pic_touxiang}/>
+                            <div className={"comment_right"}>
+                                <div className={"comment_name"}>Alpaca Bi</div>
+                                <div className={"comment_time"}>talk and code is cheap,show me the money</div>
+                                <div className={"comment_context"}>
+                                    <div>工作微信：</div>
+                                    <div style={{fontSize:'12px'}}>workbiguokang</div>
+                                    <div>工作邮箱：</div>
+                                    <div style={{fontSize:'12px'}}>biguokang@outlook.com</div>
+                                    <div>github：</div>
+                                    <div style={{fontSize:'12px',color:'white'}}><a href={"https://github.com/biguokang"}
+                                            target={"_blank"}>
+                                        https://github.com/biguokang
+                                    </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div className={"article-list"}>
+                        <div className={"home_alist"}>最新文章：</div>
+                        {this.state.data.length>0?this.state.data.map((item,index)=>(
+                        <div className={"item"} onClick={()=>this.getArticle(item.ID)}>
+                            <a className={"title"}>{item.article_title}</a>
+                            <div style={{lineHeight:1.1}}>
+                            <div className={"status"}>发布于：{item.article_push_time} | 分类：{this.typename(item.article_type)}</div>
+                            </div>
+                            <div className={"content"}>
+                                {item.article_summary}
+                            </div>
                         </div>
 
 
 
 
-                    </Modal.Body>
 
-                    <Modal.Footer>
-                        <Button bsStyle="danger" onClick={this.moneyClose} id={"nonono"}>狠心拒绝</Button>
-                    </Modal.Footer>
+                        )):<div style={{width:'100%',textAlign:'center',paddingTop:'10px'}}><img src={loading} width={'50%'}/></div>}
 
-                </Modal>
+                        <div className={"item"} style={{visibility:'hidden'}}>
+                            <a className={"title"}>hahahahahaha</a>
+                            <div style={{lineHeight:1.1}}>
+                                <div className={"status"}>hahahahahahaname</div>
+                            </div>
+                            <div className={"content"}>
+                                hahahahahahaname
+                            </div>
+                        </div>
 
 
+                    </div>
+                </div>
 
-
-                <Modal show={this.state.showModal} onHide={this.close}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>联系方式</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <h4>联系微信：</h4>
-                        <p><b id={"fui-weixin"}>workbiguokang</b></p>
-                        <h4>联系邮箱：</h4>
-                        <p><b id={"fui-mailbox"}>biguokang@outlook.com</b></p>
-                        <h4>github地址</h4>
-                        <p><a id={"fui-github"} href={"https://github.com/biguokang"} target="_blank"><b>https://github.com/biguokang</b></a></p>
-
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button bsStyle="danger" onClick={this.close}>关闭</Button>
-                    </Modal.Footer>
-                </Modal>
+</div>
 
 
 
-                {this.state.a_data.length>0?this.state.a_data.map((item,index)=>(
-                <Modal show={this.state.textModal} onHide={this.textClose} bsSize="large" aria-labelledby="contained-modal-title-lg">
 
-                    <Modal.Header closeButton>
-                        <Modal.Title id="contained-modal-title-lg">{item.article_title}</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <h4>{item.article_summary}</h4><br/>
-                        <div dangerouslySetInnerHTML={{__html:item.article_context}}></div>
-                        <br/>
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <h5>发表于：{item.article_push_time}</h5><br/>
-                        </Modal.Footer>
-
-                </Modal>)):(<div></div>)}
-
-            </div>
 
         )
     }

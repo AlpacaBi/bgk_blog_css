@@ -1,4 +1,4 @@
-import React from 'react'
+/*import React from 'react'
 import pic from '../images/404.jpg'
 
 export default class NotFound extends React.Component{
@@ -13,4 +13,5 @@ export default class NotFound extends React.Component{
         )
     }
 
-}
+}*/
+
