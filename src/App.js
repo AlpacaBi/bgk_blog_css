@@ -11,19 +11,19 @@ import './css/NavbarTop/NavbarTop.css'
 class App extends Component {
   render() {
     return (
-<div>
-
-
-
+        <div>
           <div className={'all'}>
-          <NavbarTop/>
 
-          <div className={"section"}>
-          {this.props.children}
+              <NavbarTop/>
+
+              <div className={"section"}>
+                {this.props.children}
+              </div>
+
+              <NavbarBottom/>
+
           </div>
-
-          <NavbarBottom/>
-          </div></div>
+        </div>
 
     );
   }

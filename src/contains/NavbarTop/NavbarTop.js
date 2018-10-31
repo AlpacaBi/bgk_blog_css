@@ -8,7 +8,6 @@ import '../../css/NavbarTop/NavbarTop.css'
 export default class NavbarTop extends React.Component{
     render(){
         return(
-
             <div>
                 <div className={'header'}>
                     <div className={'logo'}>毕国康的个人博客</div>

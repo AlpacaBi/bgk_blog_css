@@ -3,6 +3,8 @@ import '../../css/Article/Article.css'
 import {withRouter} from 'react-router-dom'
 import Select from 'react-select'
 
+import {get} from '../../ajax/index'
+
 import loading from '../../images/loading.gif'
 
 const options = [
@@ -25,8 +27,7 @@ export default class Article extends React.Component{
     constructor(props){
         super(props);
         this.state=({
-            data:[],
-            a_data:[],
+            ArticleListData:[],
             selectedOption: null,
             searstate:false
         })
@@ -67,18 +68,10 @@ export default class Article extends React.Component{
     }
 
     getArticleListData=(tabid)=>{
-        fetch('/apis/getArticleList?tabid='+tabid,
-            {
-                method: "GET",
-                credentials: 'include',
-            })
-            .then((res)=>{
-                return res.json()
-            }).then((json)=>{
-            this.setState({
-                data:eval(json)
-            })
-        })
+        get('/getArticleList?tabid='+tabid)
+            .then((res)=>this.setState({
+            data:res
+        }))
     }
 
 
@@ -142,7 +135,7 @@ export default class Article extends React.Component{
 
                 <div className={"article_main"}>
                     <div className={"article_main_list"}>
-                        {this.state.data.length>0?this.state.data.map((item,index)=>(
+                        {this.state.ArticleListData.length>0?this.state.ArticleListData.map((item,index)=>(
                             <div className={"item"} onClick={()=>this.getArticle(item.ID)} key={index}>
                                 <a  className={"title"} >{item.article_title}</a>
                                 <div className={"status"}>发布于：{item.article_push_time} | 分类：{this.typename(item.article_type)}</div>
@@ -166,7 +159,7 @@ export default class Article extends React.Component{
                     />
 
                     <div className={"article-list"}>
-                        {this.state.data.length>0?this.state.data.map((item,index)=>(
+                        {this.state.ArticleListData.length>0?this.state.ArticleListData.map((item,index)=>(
                         <div className={"item"} onClick={()=>this.getArticle(item.ID)} key={index}>
                             <a className={"title"}>{item.article_title}</a>
                             <div className={"status"}>发布于：{item.article_push_time} | 分类：{this.typename(item.article_type)}</div>

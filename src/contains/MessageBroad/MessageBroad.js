@@ -19,6 +19,9 @@ import vister from  '../../images/avatar/vister.png'
 import loading from '../../images/loading.gif'
 
 
+import {get,post} from '../../ajax/index'
+
+
 const customStyles = {
     content : {
         top                   : '50%',
@@ -125,51 +128,25 @@ export default class MessageBroad extends React.Component{
     }
 
 
-
-
-
     getMessageList=()=>{
-        fetch('/apis/getMessage',
-            {
-                method: "GET",
-                credentials: 'include',
-            })
-            .then((res)=>{
-                return res.json()
-            }).then((json)=>{
-
-            this.setState({
-                message_data:eval(json)
-            })
-            })
-
+        get('/getMessage').then((res)=>{
+            this.setState({message_data:res})
+        })
     }
 
     getUserLoginState=()=>{
-        fetch('/apis/getUserLogin',
-            {
-                method: "GET",
-                credentials: 'include',
-            })
-            .then((res)=>{
-                return res.json()
-            }).then((json)=>{
 
-            if(json=='unLogin'){
-
+        get('/getUserLogin').then((res)=>{
+            if(res=='unLogin'){
                 this.setState({ loginFlag:false})
             }
-
             else{
                 this.setState({
-                    user_data:eval(json),
+                    user_data:res,
                     loginFlag:true
                 })
-
             }
-
         }).then(()=>this.getMessageList())
-
     }
 
 
@@ -251,22 +228,27 @@ export default class MessageBroad extends React.Component{
         let email=''
         message=encodeURIComponent(message)
 
-        let url = "/apis/pushMessage";//接口地址
-        let data = 'userID=' + userID + '&username=' + username+'&avatar=' + avatar+'&message=' + message+'&email=' + email;
+        let url = "/pushMessage";//接口地址
+
+        let data={
+            userID:userID,
+            username:username,
+            avatar:avatar,
+            message:message,
+            email:email,
+        }
 
 
+        if(message.length>0){
+            post(url,data).then(()=>{
+                alert('发表成功！！')
+            }).then(this.closeModal2).then(this.getMessageList)
+        }else{
+            alert('你漏了点东西没输入吧！！！')
+        }
 
-
-
-        fetch(url, {
-            method: "POST",
-            headers:{
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: data}).then(()=>{
-            alert('发表成功！！')
-        }).then(this.closeModal2).then(this.getMessageList)
     }
+
 
 
     vsr_publishMessage=()=>{
@@ -275,22 +257,22 @@ export default class MessageBroad extends React.Component{
         let message=this.vsr_message.value
         message=encodeURIComponent(message)
 
-        let url = "/apis/vsr_pushMessage";//接口地址
-        let data ='&username=' + username+'&message=' + message+'&email=' + email;
+        let url = "/vsr_pushMessage";//接口地址
+
+        let data={
+            username:username,
+            message:message,
+            email:email
+        }
 
         if(username.length>0&&email.length>0&&message.length>0){
-            fetch(url, {
-                method: "POST",
-                headers:{
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: data}).then(()=>{
+
+            post(url,data).then(()=>{
                 alert('发表成功！！')
             }).then(this.closeModal3).then(this.closeModal5).then(this.getMessageList)
         }else{
             alert('你漏了点东西没输入吧！！！')
         }
-
     }
 
 
@@ -309,46 +291,43 @@ export default class MessageBroad extends React.Component{
 
 
 
-        let url = "/apis/userReg";//接口地址
-        let data = 'avatar=' + avatar + '&username=' + username+'&email=' + email+'&password=' + password+'&signature=' + signature;
-        fetch(url, {
-            method: "POST",
-            headers:{
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: data}).then(()=>{
+        let url = "/userReg";//接口地址
+
+        let data={
+            avatar:avatar,
+            username:username,
+            email:email,
+            password:password,
+            signature:signature
+        }
+
+
+        post(url,data).then(()=>{
             alert('注册成功！！')
         }).then(this.closeModal)
+
 
     }
 
 /**************************用户登陆**************************************************************/
     login=()=>{
-
-
         let username=this.login_username.value
-
         let pass=this.login_password.value
-
-
-
         let md=forge.md.md5.create();
         md.update('苟利国家生死以'+pass+'岂因祸福避趋之')
         let password=md.digest().toHex()
 
 
-        let url = "/apis/userLogin";//接口地址
-        let data = 'username=' + username+'&password=' + password;
+        let url = "/userLogin";//接口地址
+        let data = {
+            username:username,
+            password:password
+        }
 
         if(username.length>0&&pass.length>0){
-            fetch(url, {
-                method: "POST",
-                credentials: 'include',
-                headers:{
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: data}).then(()=>{
-                alert('登陆成功！！')
+
+            post(url,data).then((res)=>{
+                alert(res.message)
             }).then(
                 this.getUserLoginState
             )
@@ -361,17 +340,12 @@ export default class MessageBroad extends React.Component{
 /**************************用户注销**************************************************************/
     logout=()=>{
 
-        fetch('/apis/userLogOut',
-            {
-                method: "GET",
-                credentials: 'include',
-            }).then(()=> {
+        get('/userLogOut').then(()=> {
                 alert('您已注销')
             }
         ).then(
             this.getUserLoginState
         )
-
     }
 
 
@@ -382,16 +356,15 @@ export default class MessageBroad extends React.Component{
         let signature=this.userChange_signature.value
         let username=this.userChange_username.value
 
-        let url = "/apis/updateUserInfo";//接口地址
-        let data = '&id=' + id +'&avatar=' + avatar + '&username=' + username +'&signature=' + signature;
+        let url = "/updateUserInfo";//接口地址
+        let data ={
+            id:id,
+            avatar:avatar,
+            username:username,
+            signature:signature
+        }
 
-
-        fetch(url, {
-            method: "POST",
-            headers:{
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: data}).then(()=>{
+        post(url,data).then(()=>{
             alert('更改成功！！')
         }).then(this.closeModal4).then(this.getUserLoginState)
 

@@ -14,6 +14,7 @@ import alpaca5 from '../../images/avatar/alpaca5.png'
 import alpaca6 from '../../images/avatar/alpaca6.png'
 import vister from  '../../images/avatar/vister.png'
 import forge from "node-forge";
+import {get,post} from '../../ajax/index'
 
 
 const customStyles = {
@@ -99,59 +100,43 @@ export default class ArticleContent extends React.Component{
     }
 
     getCommentList=()=>{
-        fetch('/apis/getComment?id='+this.props.match.params.id,
-            {
-                method: "GET",
-                credentials: 'include',
-            })
+
+        get('/getComment?id='+this.props.match.params.id)
             .then((res)=>{
-                return res.json()
-            }).then((json)=>{
-            this.setState({
-                comment_data:eval(json)
+                this.setState({
+                    comment_data:res
+                })
             })
-        })
 
     }
 
     getUserLoginState=()=>{
-        fetch('/apis/getUserLogin',
-            {
-                method: "GET",
-                credentials: 'include',
-            })
+
+
+        get('/getUserLogin')
             .then((res)=>{
-                return res.json()
-            }).then((json)=>{
-
-            if(json=='unLogin'){
-
+                if(res=='unLogin'){
                 this.setState({ loginFlag:false})
             }
-
             else{
                 this.setState({
-                    user_data:eval(json),
+                    user_data:res,
                     loginFlag:true
                 })
             }
-        }).then(this.getCommentList)
+            }).then(this.getCommentList)
+
     }
 
 
     getArticles=(id)=>{
-        fetch('/apis/getArticles?id='+id,
-            {
-                method: "GET",
-                credentials: 'include',
-            })
+        get('/getArticles?id='+id)
             .then((res)=>{
-                return res.json()
-            }).then((json)=>{
             this.setState({
-                article_data:eval(json)
+                article_data:res
             })
         })
+
     }
 
     getAvator=(avatorString)=>{
@@ -206,21 +191,18 @@ export default class ArticleContent extends React.Component{
         let password=md.digest().toHex()
 
 
-        let url = "/apis/userLogin";//接口地址
-        let data = 'username=' + username+'&password=' + password;
+        let url = "/userLogin";//接口地址
+        let data={
+            username:username,
+            password:password
+        }
 
 
 
         if(username.length>0&&pass.length>0){
-            fetch(url, {
-                method: "POST",
-                credentials: 'include',
-                headers:{
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: data}).then(()=>{
+            post(url,data).then(()=>{
                 alert('登陆成功！！')
-            }).then(
+            }).then(this.closeModal()).then(
                 this.getUserLoginState
             )
         }else{
@@ -236,23 +218,25 @@ export default class ArticleContent extends React.Component{
         let comment=this.comment.value
         comment=encodeURIComponent(comment)
 
-        let url = "/apis/pushComment";//接口地址
-        let data = 'aID=' + aID + '&userID=' + userID + '&username=' + username+'&avatar=' + avatar+'&comment=' + comment;
-
+        let url = "/pushComment";//接口地址
+        let data={
+            aID:aID,
+            userID:userID,
+            username:username,
+            avatar:avatar,
+            comment:comment
+        }
 
         if(comment.length>0){
-            fetch(url, {
-                method: "POST",
-                headers:{
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: data}).then(()=>{
+            post(url,data).then(()=>{
                 alert('发表成功！！')
             }).then(()=>{this.comment.value=''}).then(this.getCommentList)
         }else{
             alert('你貌似什么都没写吧？？？')
         }
     }
+
+
 
 
     vsr_publishComment=()=>{
@@ -262,24 +246,25 @@ export default class ArticleContent extends React.Component{
         let message=this.vsr_message.value
         message=encodeURIComponent(message)
 
-        let url = "/apis/vsr_pushComment";//接口地址
-        let data ='&aID=' + aID+'&username=' + username+'&message=' + message+'&email=' + email;
+        let data={
+            aID:aID,
+            username:username,
+            message:message,
+            email:email
+        }
+
+        let url = "/vsr_pushComment";//接口地址
+
+
 
         if(username.length>0&&email.length>0&&message.length>0){
-            fetch(url, {
-                method: "POST",
-                headers:{
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: data}).then(()=>{
+            post(url,data).then(()=>{
                 alert('评论成功！！')
             }).then(this.closeModal2).then(this.closeModal3).then(this.getCommentList)
         }else{
             alert('你漏了点东西没输入吧！！！')
         }
     }
-
-
 
 
 

@@ -1,13 +1,18 @@
 import React from 'react'
 import '../../css/Home/Home.css'
 import Modal from 'react-modal';
-
-import pic_touxiang          from '../../images/touxiang.png'
+import {connect} from 'react-redux'
+import pic_touxiang from '../../images/touxiang.png'
 import cao from '../../images/caonima.gif'
 import two from '../../images/two.jpg'
 import pay from '../../images/pay.png'
-
 import loading from '../../images/loading.gif'
+
+
+import {actions} from "../../reducers/HomeReducer";
+import {bindActionCreators} from 'redux'
+import home from "../../reducers/HomeReducer";
+const {home_article_data,open_info_model,close_info_model,open_pay_model,close_pay_model} =actions
 
 
 const customStyles = {
@@ -25,57 +30,10 @@ const customStyles = {
 
 Modal.setAppElement('#root')
 
-export default class Home extends React.Component{
+class Home extends React.Component{
 
-
-    constructor(){
-        super();
-        this.state=({
-            data:[],
-            modalIsOpen: false,
-            modalIsOpen2: false,
-            a_data:[]
-        })
-        this.openModal = this.openModal.bind(this);
-        this.closeModal = this.closeModal.bind(this);
-
-        this.openModal2 = this.openModal2.bind(this);
-        this.closeModal2 = this.closeModal2.bind(this);
-    }
     componentDidMount(){
-        this.getHomeListData()
-    }
-
-    openModal() {
-        this.setState({modalIsOpen: true});
-    }
-    closeModal() {
-        this.setState({modalIsOpen: false});
-    }
-
-
-    openModal2() {
-        this.setState({modalIsOpen2: true});
-    }
-    closeModal2() {
-        this.setState({modalIsOpen2: false});
-    }
-
-
-
-    getHomeListData=()=>{
-        fetch('/apis/homeArticleList',
-            {
-                method: "GET",
-                credentials: 'include',
-            })
-            .then((res)=>{
-                return res.json()
-            }).then((json)=>{
-            this.setState({
-                data:eval(json)
-            })
-        })
+        this.props.home_article_data()
     }
 
     getArticle=(id)=>{
@@ -121,10 +79,10 @@ export default class Home extends React.Component{
                         </div>
                         <div className={"contant"}>
                             <div >工作微信：</div>
-                            <span><b id={"fui-weixin"} onClick={this.openModal}>workbiguokang</b></span>
+                            <span><b id={"fui-weixin"} onClick={this.props.open_pay_model}>workbiguokang</b></span>
 
                             <div>工作邮箱：</div>
-                            <span><b id={"fui-mailbox"}>biguokang@outlook.com</b></span>
+                            <span><b id={"fui-mailbox"} onClick={this.props.home_article_data}>biguokang@outlook.com</b></span>
 
                             <div>github：</div>
                             <span><a id={"fui-github"} href={"https://github.com/biguokang"}
@@ -132,7 +90,7 @@ export default class Home extends React.Component{
                         </div>
                 </div>
 
-                    <div className={"caonima"} id={'pypy'} onClick={this.openModal2}>
+                    <div className={"caonima"} id={'pypy'} onClick={this.props.open_pay_model}>
                         <img src={cao} width="100%"/>
                         <div style={{textAlign:'center',color:'white'}}>求py交易，点击草泥马即可赞助我</div>
                     </div>
@@ -141,7 +99,7 @@ export default class Home extends React.Component{
                     <div className={'article-list'}>
                         <div className={"home_alist"} id={'newArt'}>最新文章：</div>
                         <div>
-                            {this.state.data.length>0?this.state.data.map((item,index)=>(
+                            {this.props.articleData.length>0?this.props.articleData.map((item,index)=>(
                                 <div className={'item'} onClick={()=>this.getArticle(item.ID)}>
                                     <a  className={"title"} >{item.article_title}</a>
                                     <div className={"status"}>发布于：{item.article_push_time} | 分类：{this.typename(item.article_type)}</div>
@@ -156,8 +114,8 @@ export default class Home extends React.Component{
 
 
                     <Modal
-                        isOpen={this.state.modalIsOpen}
-                        onRequestClose={this.closeModal}
+                        isOpen={this.props.infoModal}
+                        onRequestClose={this.props.close_info_model}
                         style={customStyles}
                         contentLabel="Example Modal"
                     >
@@ -165,8 +123,8 @@ export default class Home extends React.Component{
                     </Modal>
 
                     <Modal
-                        isOpen={this.state.modalIsOpen2}
-                        onRequestClose={this.closeModal2}
+                        isOpen={this.props.payModal}
+                        onRequestClose={this.props.close_pay_model}
                         style={customStyles}
                         contentLabel="Example Modal"
                     >
@@ -204,7 +162,7 @@ export default class Home extends React.Component{
 
                     <div className={"article-list"}>
                         <div className={"home_alist"}>最新文章：</div>
-                        {this.state.data.length>0?this.state.data.map((item,index)=>(
+                        {this.props.articleData.length>0?this.props.articleData.map((item,index)=>(
                         <div className={"item"} onClick={()=>this.getArticle(item.ID)}>
                             <a className={"title"}>{item.article_title}</a>
                             <div style={{lineHeight:1.1}}>
@@ -214,8 +172,6 @@ export default class Home extends React.Component{
                                 {item.article_summary}
                             </div>
                         </div>
-
-
 
 
 
@@ -230,18 +186,36 @@ export default class Home extends React.Component{
                                 hahahahahahaname
                             </div>
                         </div>
-
-
                     </div>
                 </div>
-
-</div>
-
-
-
-
+            </div>
 
         )
     }
 
 }
+
+
+
+const mapStateToProps=(state)=> {
+    return{
+        articleData:state.home.homeArticleData,
+        infoModal:state.home.infoModal,
+        payModal:state.home.payModal
+    }
+}
+
+const mapDispatchToProps=(dispatch)=> {
+    return{
+        home_article_data:bindActionCreators(home_article_data,dispatch),
+        open_info_model:bindActionCreators(open_info_model,dispatch),
+        close_info_model:bindActionCreators(close_info_model,dispatch),
+        open_pay_model:bindActionCreators(open_pay_model,dispatch),
+        close_pay_model:bindActionCreators(close_pay_model,dispatch),
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Home);

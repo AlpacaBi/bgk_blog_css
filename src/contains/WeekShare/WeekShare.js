@@ -1,55 +1,33 @@
 import React from 'react'
+import {bindActionCreators} from 'redux'
+import {connect} from 'react-redux'
 import '../../css/WeekShare/WeekShare.css'
 import loading from '../../images/loading.gif'
-import Article from "../Article/Article";
 import {withRouter} from "react-router-dom";
-export default class WeekShare extends React.Component{
+import {get} from '../../ajax/index'
 
-    constructor(props){
-        super(props);
-        this.state=({
-            share_data:[],
-            shareList_data:[]
-        })
-    }
+
+import {actions} from "../../reducers/WeekShareReudcer";
+
+
+
+
+const {
+    get_share_data,
+    get_share_list_data,
+  } =actions
+
+
+
+
+class WeekShare extends React.Component{
+
+
 
     componentDidMount(){
-        this.getShareListData()
+        this.props.get_share_list_data()
+        console.log(this.props.share_data)
     }
-
-    getShareListData=()=>{
-        fetch('/apis/getShareList',
-            {
-                method: "GET",
-                credentials: 'include',
-            })
-            .then((res)=>{
-                return res.json()
-            }).then((json)=>{
-            this.setState({
-                shareList_data:eval(json)
-            })
-        })
-    }
-
-
-    getShares=(id)=>{
-        fetch('/apis/getShares?id='+id,
-            {
-                method: "GET",
-                credentials: 'include',
-            })
-            .then((res)=>{
-                return res.json()
-            }).then((json)=>{
-            this.setState({
-                share_data:eval(json)
-
-            })
-        })
-    }
-
-
 
     getShareContent=(id)=>{
         this.props.history.push('/weekshare/'+id)
@@ -65,10 +43,10 @@ export default class WeekShare extends React.Component{
                 <div className={"share_sidebar"}>
                     <div className={"share_sidebar_type_name"}>每周分享</div>
                     <div className={"share_list"}>
-                        {this.state.shareList_data.length>0?this.state.shareList_data.map((item,index)=>(
+                        {this.props.shareList_data.length>0?this.props.shareList_data.map((item,index)=>(
                             <div className={"share_list_item"}
                                  id={"shareid"}
-                                 onClick={()=>this.getShares(item.ID)}>
+                                 onClick={()=>this.props.get_share_data(item.ID)}>
                                 {item.share_title}
                                 </div>
                         )):<div><h2>加载中。。。</h2></div>}
@@ -82,18 +60,14 @@ export default class WeekShare extends React.Component{
                     <div className={"share_text"}>
                         这里记录过去一周，我看到的值得分享的东西，每周日发布
                     </div>
-                    {this.state.share_data.length>0?this.state.share_data.map((item,index)=>(
+                    {this.props.share_data.length>0?this.props.share_data.map((item,index)=>(
                     <div className={"share_content_back"}>
-
                             <div className={"share_context"}>
                                 <div className={"share_context_title"}>{item.share_title}</div>
                                 <div className={"share_context_text"}
                                      dangerouslySetInnerHTML={{__html:item.share_context}}>
                                 </div>
-
                             </div>
-
-
                     </div>
                     )):<div style={{width:'100%',textAlign:'center',paddingTop:'25px'}}><img src={loading} width={'25%'}/></div>}
 
@@ -108,7 +82,7 @@ export default class WeekShare extends React.Component{
                     </div>
 
                     <div className={"share_list"}>
-                        {this.state.shareList_data.length>0?this.state.shareList_data.map((item,index)=>(
+                        {this.props.shareList_data.length>0?this.props.shareList_data.map((item,index)=>(
                             <div className={"share_list_item"}
                                  onClick={()=>this.getShareContent(item.ID)}>
                                 {item.share_title}
@@ -125,5 +99,23 @@ export default class WeekShare extends React.Component{
     }
 
 }
-
 withRouter(WeekShare)
+
+const mapStateToProps=(state)=> {
+    return{
+        share_data:state.weekshare.share_data,
+        shareList_data:state.weekshare.shareList_data,
+    }
+}
+
+const mapDispatchToProps=(dispatch)=> {
+    return{
+        get_share_data:bindActionCreators(get_share_data,dispatch),
+        get_share_list_data:bindActionCreators(get_share_list_data,dispatch),
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(WeekShare);

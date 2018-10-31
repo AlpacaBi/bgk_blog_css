@@ -1,6 +1,7 @@
 import React from 'react'
 import '../../css/WeekShareContent/WeekShareContent.css'
 import loading from '../../images/loading.gif'
+import {get} from '../../ajax/index'
 
 
 
@@ -27,18 +28,13 @@ export default class WeekShareContent extends React.Component{
 
 
     getShares=(id)=>{
-        fetch('/apis/getShares?id='+id,
-            {
-                method: "GET",
-                credentials: 'include',
-            })
-            .then((res)=>{
-                return res.json()
-            }).then((json)=>{
+
+        get('/getShares?id='+id).then((res)=>{
             this.setState({
-                share_data:eval(json)
+                share_data:res
             })
         })
+
     }
 
 

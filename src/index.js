@@ -18,9 +18,15 @@ import ArticleContent from "./contains/ArticleContent/ArticleContent";
 import WeekShareContent from "./contains/WeekShareContent/WeekShareContent"
 
 
+import store from './store'
+import {Provider} from 'react-redux'
+
+
+
+
 ReactDOM.render(
 
-
+<Provider store={store}>
         <Router>
             <App>
                 <Switch>
@@ -35,6 +41,7 @@ ReactDOM.render(
                 </Switch>
             </App>
         </Router>
+</Provider>
    , document.getElementById('root'));
 registerServiceWorker();
 
