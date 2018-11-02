@@ -1,4 +1,10 @@
 import React from 'react'
+
+import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux'
+import {actions} from "../../reducers/MessageBroadReducer";
+import {actions2} from "../../reducers/ArticleContentReudcer";
+
 import Modal from 'react-modal';
 import '../../css/ArticleContent/ArticleContent.css'
 import '../../css/MessageBroad/form.css'
@@ -15,6 +21,26 @@ import alpaca6 from '../../images/avatar/alpaca6.png'
 import vister from  '../../images/avatar/vister.png'
 import forge from "node-forge";
 import {get,post} from '../../ajax/index'
+
+
+
+
+const {
+    logins
+} =actions
+
+const {
+    open_login_modal,
+    close_login_modal,
+    open_vsr_modal,
+    close_vsr_modal,
+    open_movsr_modal,
+    close_movsr_modal,
+    get_article,
+    get_comment,
+    publish_comment,
+    vsr_publish_comment
+} =actions2
 
 
 const customStyles = {
@@ -44,100 +70,23 @@ const customStyles2 = {
 
 Modal.setAppElement('#root')
 
-export default class ArticleContent extends React.Component{
-
-    constructor(props){
-        super(props);
-        this.state=({
-            article_data:[],
-            loginFlag:false,
-            modalIsOpen: false,
-            modalIsOpen2: false,
-            modalIsOpen3: false,
-            comment_data:[]
-        })
-
-        this.openModal = this.openModal.bind(this);
-        this.closeModal = this.closeModal.bind(this);
-
-        this.openModal2 = this.openModal2.bind(this);
-        this.closeModal2 = this.closeModal2.bind(this);
-
-        this.openModal3 = this.openModal3.bind(this);
-        this.closeModal3 = this.closeModal3.bind(this);
-    }
+class ArticleContent extends React.Component{
 
 
 
-    openModal() {
-        this.setState({modalIsOpen: true});
-    }
-    closeModal() {
-        this.setState({modalIsOpen: false});
-    }
 
-
-    openModal2() {
-        this.setState({modalIsOpen2: true});
-    }
-    closeModal2() {
-        this.setState({modalIsOpen2: false});
-    }
-
-
-    openModal3() {
-        this.setState({modalIsOpen3: true});
-    }
-    closeModal3() {
-        this.setState({modalIsOpen3: false});
-    }
 
 
 
     componentDidMount(){
-        this.getArticles(this.props.match.params.id)
-        this.getUserLoginState()
-    }
-
-    getCommentList=()=>{
-
-        get('/getComment?id='+this.props.match.params.id)
-            .then((res)=>{
-                this.setState({
-                    comment_data:res
-                })
-            })
-
-    }
-
-    getUserLoginState=()=>{
-
-
-        get('/getUserLogin')
-            .then((res)=>{
-                if(res=='unLogin'){
-                this.setState({ loginFlag:false})
-            }
-            else{
-                this.setState({
-                    user_data:res,
-                    loginFlag:true
-                })
-            }
-            }).then(this.getCommentList)
-
+        this.props.get_article(this.props.match.params.id)
+        this.props.get_comment(this.props.match.params.id)
     }
 
 
-    getArticles=(id)=>{
-        get('/getArticles?id='+id)
-            .then((res)=>{
-            this.setState({
-                article_data:res
-            })
-        })
 
-    }
+
+
 
     getAvator=(avatorString)=>{
         let avator
@@ -191,20 +140,13 @@ export default class ArticleContent extends React.Component{
         let password=md.digest().toHex()
 
 
-        let url = "/userLogin";//接口地址
         let data={
             username:username,
             password:password
         }
 
-
-
         if(username.length>0&&pass.length>0){
-            post(url,data).then(()=>{
-                alert('登陆成功！！')
-            }).then(this.closeModal()).then(
-                this.getUserLoginState
-            )
+            this.props.logins(data)
         }else{
             alert('用户名或密码不能为空哦')
         }
@@ -212,13 +154,11 @@ export default class ArticleContent extends React.Component{
 
     publishComment=()=>{
         let aID=this.props.match.params.id
-        let userID=this.state.user_data[0].ID
-        let username=this.state.user_data[0].username
-        let avatar=this.state.user_data[0].avatar
+        let userID=this.props.user_data[0].ID
+        let username=this.props.user_data[0].username
+        let avatar=this.props.user_data[0].avatar
         let comment=this.comment.value
-        comment=encodeURIComponent(comment)
 
-        let url = "/pushComment";//接口地址
         let data={
             aID:aID,
             userID:userID,
@@ -228,9 +168,8 @@ export default class ArticleContent extends React.Component{
         }
 
         if(comment.length>0){
-            post(url,data).then(()=>{
-                alert('发表成功！！')
-            }).then(()=>{this.comment.value=''}).then(this.getCommentList)
+            this.props.publish_comment(data)
+
         }else{
             alert('你貌似什么都没写吧？？？')
         }
@@ -244,7 +183,6 @@ export default class ArticleContent extends React.Component{
         let username=this.vsr_username.value
         let email=this.vsr_email.value
         let message=this.vsr_message.value
-        message=encodeURIComponent(message)
 
         let data={
             aID:aID,
@@ -253,14 +191,13 @@ export default class ArticleContent extends React.Component{
             email:email
         }
 
-        let url = "/vsr_pushComment";//接口地址
 
 
 
         if(username.length>0&&email.length>0&&message.length>0){
-            post(url,data).then(()=>{
-                alert('评论成功！！')
-            }).then(this.closeModal2).then(this.closeModal3).then(this.getCommentList)
+
+            this.props.vsr_publish_comment(data)
+
         }else{
             alert('你漏了点东西没输入吧！！！')
         }
@@ -274,7 +211,7 @@ export default class ArticleContent extends React.Component{
             <div>
             <div className={'articleContents'}>
             <div>
-                    {this.state.article_data.length>0?this.state.article_data.map((item,index)=>(
+                    {this.props.article_data.length>0?this.props.article_data.map((item,index)=>(
                         <div className={'article_content_back'}>
                             <div className={'article_content'} key={index}>
                                 <h1 >{item.article_title}</h1>
@@ -295,8 +232,8 @@ export default class ArticleContent extends React.Component{
                             <div style={{textAlign: "center",fontSize: "50px",fontWeight:" bold"}}>评论区</div>
 
 
-                            {this.state.loginFlag?<div style={{width:"100%",marginTop: "50px"}}>
-                                <div style={{marginLeft: "10%",fontSize: "30px"}}>欢迎你,{this.state.user_data[0].username}</div>
+                            {this.props.loginFlag?<div style={{width:"100%",marginTop: "50px"}}>
+                                <div style={{marginLeft: "10%",fontSize: "30px"}}>欢迎你,{this.props.user_data[0].username}</div>
                                 <form>
                                     <textarea style={{width:"80%",marginLeft: "10%",height: "150px"}}
                                               placeholder="请给本文发评论吧"
@@ -307,26 +244,30 @@ export default class ArticleContent extends React.Component{
                                 </form>
 
                             </div>:<div style={{width:"80%",marginTop: "50px",marginLeft:'10%'}}>
-                                <button onClick={this.openModal}
+                                <button onClick={this.props.open_login_modal}
                                         id={'logincom'}>登陆即可发评论</button></div>}
 
 
 
-                            <div>
+                            {this.props.loginFlag?<div> </div>:<div>
                                 <button id={"basic-form-submit"}
                                         id={'vlogincom'}
                                         style={{width:"80%",marginLeft:'10%',marginTop:5}}
-                                        onClick={this.openModal2}>
+                                        onClick={this.props.open_vsr_modal}>
                                     游客免登录评论
                                 </button>
-                            </div>
+                            </div>}
+
+
+
+
 
 
 
 
 
                             <div className={"comment_main_list"}>
-                                {this.state.comment_data.length>0?this.state.comment_data.map((item,index)=>(
+                                {this.props.comment_data.length>0?this.props.comment_data.map((item,index)=>(
                                     <div className={"item"}>
                                         <img className={"comment_pic"} src={this.getAvator(item.user_avatar)}/>
                                         <div className={"comment_right"}>
@@ -344,8 +285,8 @@ export default class ArticleContent extends React.Component{
 
 
                     <Modal
-                        isOpen={this.state.modalIsOpen}
-                        onRequestClose={this.closeModal}
+                        isOpen={this.props.loginModal}
+                        onRequestClose={this.props.close_login_modal}
                         style={customStyles}
                         contentLabel="Example Modal"
                     >
@@ -367,14 +308,14 @@ export default class ArticleContent extends React.Component{
                                     onClick={this.login}>登录</button>
                             <button id={"basic-form-submit"}
                                     type={"submit"} style={{marginTop: "10px"}}
-                                    onClick={this.closeModal}>取消</button>
+                                    onClick={this.props.close_login_modal}>取消</button>
                         </form>
                     </Modal>
 
 
                 <Modal
-                    isOpen={this.state.modalIsOpen2}
-                    onRequestClose={this.closeModal2}
+                    isOpen={this.props.vsrModal}
+                    onRequestClose={this.props.close_vsr_modal}
                     style={customStyles}
                     contentLabel="Example Modal"
                 >
@@ -403,7 +344,7 @@ export default class ArticleContent extends React.Component{
 
 
                         <button onClick={()=>this.vsr_publishComment()} id={'avcom'}>确认发送</button>
-                        <button onClick={this.closeModal2} style={{marginTop:'5px'}}>取消</button>
+                        <button onClick={this.props.close_vsr_modal} style={{marginTop:'5px'}}>取消</button>
 
                     </form>
                 </Modal>
@@ -426,7 +367,7 @@ export default class ArticleContent extends React.Component{
 
             </div>
                 <div className="mo-articleContent">
-                    {this.state.article_data.length>0?this.state.article_data.map((item,index)=>(
+                    {this.props.article_data.length>0?this.props.article_data.map((item,index)=>(
                     <div className={'article_content_back'}>
                         <div className={'article_content'} key={index}>
                             <h1 style={{fontSize:28}}>{item.article_title}</h1>
@@ -444,17 +385,16 @@ export default class ArticleContent extends React.Component{
                     <div className={'comment_content_back'}>
                         <div className={'comment_content'}>
                             <div style={{textAlign: "center",fontSize: "25px",fontWeight:" bold",paddingTop:'5px'}}>评论区</div>
-
                             <div>
                                 <button id={"basic-form-submit"}
                                         className={"btn-vister"}
-                                        onClick={this.openModal3}>
+                                        onClick={this.props.open_movsr_modal}>
                                     游客免登录发言
                                 </button>
                             </div>
 
                             <div className={"comment_main_list"}>
-                                {this.state.comment_data.length>0?this.state.comment_data.map((item,index)=>(
+                                {this.props.comment_data.length>0?this.props.comment_data.map((item,index)=>(
                                 <div className={"item"}>
                                     <img className={"comment_pic"} src={this.getAvator(item.user_avatar)}/>
                                     <div className={"comment_right"}>
@@ -468,8 +408,8 @@ export default class ArticleContent extends React.Component{
                             </div>
 
                             <Modal
-                                isOpen={this.state.modalIsOpen3}
-                                onRequestClose={this.closeModal3}
+                                isOpen={this.props.moVsrModal}
+                                onRequestClose={this.props.close_movsr_modal}
                                 style={customStyles2}
                                 contentLabel="Example Modal"
                             >
@@ -498,7 +438,7 @@ export default class ArticleContent extends React.Component{
 
 
                                     <button onClick={()=>this.vsr_publishComment()}>确认发布</button>
-                                    <button onClick={this.closeModal3} style={{marginTop:'5px'}}>取消</button>
+                                    <button onClick={this.props.close_movsr_modal} style={{marginTop:'5px'}}>取消</button>
 
                                 </form>
                             </Modal>
@@ -515,3 +455,41 @@ export default class ArticleContent extends React.Component{
     }
 
 }
+
+
+
+const mapStateToProps=(state)=> {
+    return{
+        loginFlag:state.messagebroad.loginFlag,
+        user_data:state.messagebroad.user_data,
+
+        loginModal:state.articlecontent.loginModal,
+        vsrModal:state.articlecontent.vsrModal,
+        moVsrModal:state.articlecontent.moVsrModal,
+
+        article_data:state.articlecontent.article_data,
+        comment_data:state.articlecontent.comment_data,
+    }
+}
+
+const mapDispatchToProps=(dispatch)=> {
+    return{
+        logins:bindActionCreators(logins,dispatch),
+
+        open_login_modal:bindActionCreators(open_login_modal,dispatch),
+        close_login_modal:bindActionCreators(close_login_modal,dispatch),
+        open_vsr_modal:bindActionCreators(open_vsr_modal,dispatch),
+        close_vsr_modal:bindActionCreators(close_vsr_modal,dispatch),
+        open_movsr_modal:bindActionCreators(open_movsr_modal,dispatch),
+        close_movsr_modal:bindActionCreators(close_movsr_modal,dispatch),
+        get_article:bindActionCreators(get_article,dispatch),
+        get_comment:bindActionCreators(get_comment,dispatch),
+        publish_comment:bindActionCreators(publish_comment,dispatch),
+        vsr_publish_comment:bindActionCreators(vsr_publish_comment,dispatch),
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(ArticleContent);

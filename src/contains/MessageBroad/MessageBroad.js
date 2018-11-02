@@ -1,5 +1,10 @@
 
 import React from 'react'
+import {connect} from 'react-redux'
+import {actions} from "../../reducers/MessageBroadReducer";
+import {bindActionCreators} from 'redux'
+
+
 import Modal from 'react-modal';
 import forge from 'node-forge'
 import '../../css/MessageBroad/MessageBroad.css'
@@ -15,11 +20,31 @@ import alpaca4 from '../../images/avatar/alpaca4.png'
 import alpaca5 from '../../images/avatar/alpaca5.png'
 import alpaca6 from '../../images/avatar/alpaca6.png'
 import vister from  '../../images/avatar/vister.png'
-
 import loading from '../../images/loading.gif'
 
 
-import {get,post} from '../../ajax/index'
+
+
+const {
+    open_reg_modal,
+    close_reg_modal,
+    open_push_modal,
+    close_push_modal,
+    open_vsrdeskpush_modal,
+    close_vsrdeskpush_modal,
+    open_update_modal,
+    close_update_modal,
+    open_vsrpush_modal,
+    close_vsrpush_modal,
+    change_avatar_select,
+    change_user_avatar,
+    check_login_state,
+    logins,
+    logouts,
+    vsr_push_message,
+    push_message,
+    reg,change_user_data,update_user_data
+} =actions
 
 
 const customStyles = {
@@ -48,123 +73,23 @@ const customStyles2 = {
 };
 
 
+
+
+
 Modal.setAppElement('#root')
 
-export default class MessageBroad extends React.Component{
+class MessageBroad extends React.Component{
 
-    constructor(){
-        super();
-        this.state=({
-            loginFlag:false,
-            value:'',
-            avatar_select:alpaca1,
-            user_data:[{ "avatar":"no" , "signature":"no" ,"username":"no"}],
-            user_avatar:alpaca1,
-            message_data:[],
 
-            modalIsOpen: false,
-            modalIsOpen2: false,
-            modalIsOpen3: false,
-            modalIsOpen4: false,
-            modalIsOpen5: false
-
-        });
-
-        this.openModal = this.openModal.bind(this);
-        this.closeModal = this.closeModal.bind(this);
-
-        this.openModal2 = this.openModal2.bind(this);
-        this.closeModal2 = this.closeModal2.bind(this);
-
-        this.openModal3 = this.openModal3.bind(this);
-        this.closeModal3 = this.closeModal3.bind(this);
-
-        this.openModal4 = this.openModal4.bind(this);
-        this.closeModal4 = this.closeModal4.bind(this);
-
-        this.openModal5 = this.openModal5.bind(this);
-        this.closeModal5 = this.closeModal5.bind(this);
-    }
-
-    openModal() {
-        this.setState({modalIsOpen: true});
-    }
-    closeModal() {
-        this.setState({modalIsOpen: false});
-    }
-
-    openModal2() {
-        this.setState({modalIsOpen2: true});
-    }
-    closeModal2() {
-        this.setState({modalIsOpen2: false});
-    }
-
-    openModal3() {
-        this.setState({modalIsOpen3: true});
-    }
-    closeModal3() {
-        this.setState({modalIsOpen3: false});
-    }
-
-    openModal4() {
-        this.setState({modalIsOpen4: true});
-    }
-    closeModal4() {
-        this.setState({modalIsOpen4: false});
-    }
-
-    openModal5() {
-        this.setState({modalIsOpen5: true});
-    }
-    closeModal5() {
-        this.setState({modalIsOpen5: false});
-    }
 
 
     componentDidMount(){
-        this.getMessageList();
-        this.getUserLoginState();
-    }
-
-
-    getMessageList=()=>{
-        get('/getMessage').then((res)=>{
-            this.setState({message_data:res})
-        })
-    }
-
-    getUserLoginState=()=>{
-
-        get('/getUserLogin').then((res)=>{
-            if(res=='unLogin'){
-                this.setState({ loginFlag:false})
-            }
-            else{
-                this.setState({
-                    user_data:res,
-                    loginFlag:true
-                })
-            }
-        }).then(()=>this.getMessageList())
+        this.props.check_login_state()
     }
 
 
 
 
-
-
-
-
-    getValidationState=()=> {
-        const length = this.state.value.length;
-        if (length >= 0&&length<=100) return 'success';
-        else return 'error';
-    }
-
-    handleChange=(e)=> {
-        this.setState({ value: e.target.value });
-    }
 
 
     getAvator=(avatorString)=>{
@@ -179,56 +104,27 @@ export default class MessageBroad extends React.Component{
             case 'pic_touxiang':avator=pic_touxiang;break;
             case 'vister':avator=vister;break;
         }
-
-
         return avator
     }
 
     selectChange=()=>{
-
-        let avatar=this.avatar.value
-
-        switch(avatar){
-            case 'alpaca1':this.setState({ avatar_select:alpaca1});break;
-            case 'alpaca2':this.setState({ avatar_select:alpaca2});break;
-            case 'alpaca3':this.setState({ avatar_select:alpaca3});break;
-            case 'alpaca4':this.setState({ avatar_select:alpaca4});break;
-            case 'alpaca5':this.setState({ avatar_select:alpaca5});break;
-            case 'alpaca6':this.setState({ avatar_select:alpaca6});break;
-        }
-
-
-
+        this.props.change_avatar_select(this.avatar.value)
     }
 
     selectChangeccc=()=>{
-
-        let avatar=this.userChange_avatar.value
-
-        switch(avatar){
-            case 'alpaca1':this.setState({ user_avatar:alpaca1});break;
-            case 'alpaca2':this.setState({ user_avatar:alpaca2});break;
-            case 'alpaca3':this.setState({ user_avatar:alpaca3});break;
-            case 'alpaca4':this.setState({ user_avatar:alpaca4});break;
-            case 'alpaca5':this.setState({ user_avatar:alpaca5});break;
-            case 'alpaca6':this.setState({ user_avatar:alpaca6});break;
-        }
-
-        //this.setState({ avatar_select: eval(avatar) });
-
+        this.props.change_user_avatar(this.userChange_avatar.value)
     }
 
 
 /**************************发表新留言**************************************************************/
     publishMessage=()=>{
-        let userID=this.state.user_data[0].ID
-        let username=this.state.user_data[0].username
-        let avatar=this.state.user_data[0].avatar
+        let userID=this.props.user_data[0].ID
+        let username=this.props.user_data[0].username
+        let avatar=this.props.user_data[0].avatar
         let message=this.message.value
         let email=''
-        message=encodeURIComponent(message)
 
-        let url = "/pushMessage";//接口地址
+
 
         let data={
             userID:userID,
@@ -238,26 +134,18 @@ export default class MessageBroad extends React.Component{
             email:email,
         }
 
-
         if(message.length>0){
-            post(url,data).then(()=>{
-                alert('发表成功！！')
-            }).then(this.closeModal2).then(this.getMessageList)
+            this.props.push_message(data)
         }else{
             alert('你漏了点东西没输入吧！！！')
         }
-
     }
-
 
 
     vsr_publishMessage=()=>{
         let username=this.vsr_username.value
         let email=this.vsr_email.value
         let message=this.vsr_message.value
-        message=encodeURIComponent(message)
-
-        let url = "/vsr_pushMessage";//接口地址
 
         let data={
             username:username,
@@ -265,11 +153,9 @@ export default class MessageBroad extends React.Component{
             email:email
         }
 
-        if(username.length>0&&email.length>0&&message.length>0){
 
-            post(url,data).then(()=>{
-                alert('发表成功！！')
-            }).then(this.closeModal3).then(this.closeModal5).then(this.getMessageList)
+        if(username.length>0&&email.length>0&&message.length>0){
+            this.props.vsr_push_message(data)
         }else{
             alert('你漏了点东西没输入吧！！！')
         }
@@ -290,9 +176,6 @@ export default class MessageBroad extends React.Component{
         let password=md.digest().toHex()
 
 
-
-        let url = "/userReg";//接口地址
-
         let data={
             avatar:avatar,
             username:username,
@@ -302,9 +185,9 @@ export default class MessageBroad extends React.Component{
         }
 
 
-        post(url,data).then(()=>{
-            alert('注册成功！！')
-        }).then(this.closeModal)
+        this.props.reg(data)
+
+
 
 
     }
@@ -317,20 +200,13 @@ export default class MessageBroad extends React.Component{
         md.update('苟利国家生死以'+pass+'岂因祸福避趋之')
         let password=md.digest().toHex()
 
-
-        let url = "/userLogin";//接口地址
         let data = {
             username:username,
             password:password
         }
 
         if(username.length>0&&pass.length>0){
-
-            post(url,data).then((res)=>{
-                alert(res.message)
-            }).then(
-                this.getUserLoginState
-            )
+            this.props.logins(data)
         }else{
             alert('我提醒过你了，用户名或密码不能为空！！！')
         }
@@ -339,24 +215,18 @@ export default class MessageBroad extends React.Component{
 
 /**************************用户注销**************************************************************/
     logout=()=>{
-
-        get('/userLogOut').then(()=> {
-                alert('您已注销')
-            }
-        ).then(
-            this.getUserLoginState
-        )
+        this.props.logouts()
     }
 
 
 /**************************更改用户信息**************************************************************/
     updateUserInfo=()=>{
-        let id=this.state.user_data[0].ID
+        let id=this.props.user_data[0].ID
         let avatar=this.userChange_avatar.value
         let signature=this.userChange_signature.value
         let username=this.userChange_username.value
 
-        let url = "/updateUserInfo";//接口地址
+
         let data ={
             id:id,
             avatar:avatar,
@@ -364,12 +234,9 @@ export default class MessageBroad extends React.Component{
             signature:signature
         }
 
-        post(url,data).then(()=>{
-            alert('更改成功！！')
-        }).then(this.closeModal4).then(this.getUserLoginState)
+        this.props.update_user_data(data)
 
     }
-
 
 
 
@@ -388,14 +255,14 @@ export default class MessageBroad extends React.Component{
 
                     <section className={"form-session"}>
                         {/**/}
-                        {this.state.loginFlag?
+                        {this.props.loginFlag?
                         <form id={"basic-form"}>
-                            <img src={this.getAvator(this.state.user_data[0].avatar)} width={"80%"} style={{borderRadius: "100%"}}/>
-                            <h2>{this.state.user_data[0].username}</h2>
-                            <h4>{this.state.user_data[0].email}</h4>
-                            <h5 style={{color:'grey'}}>{this.state.user_data[0].signature}</h5>
-                            <button id={"basic-form-submit"} id={'wirtemessage'} type={"submit"} style={{marginTop: "10px"}} onClick={this.openModal2}>写留言</button>
-                            <button id={"basic-form-submit"} id={'updateinfo'}type={"submit"} style={{marginTop: "5px"}} onClick={this.openModal4}>更改个人信息</button>
+                            <img src={this.getAvator(this.props.user_data[0].avatar)} width={"80%"} style={{borderRadius: "100%"}}/>
+                            <h2>{this.props.user_data[0].username}</h2>
+                            <h4>{this.props.user_data[0].email}</h4>
+                            <h5 style={{color:'grey'}}>{this.props.user_data[0].signature}</h5>
+                            <button id={"basic-form-submit"} id={'wirtemessage'} type={"submit"} style={{marginTop: "10px"}} onClick={this.props.open_push_modal}>写留言</button>
+                            <button id={"basic-form-submit"} id={'updateinfo'}type={"submit"} style={{marginTop: "5px"}} onClick={this.props.open_update_modal}>更改个人信息</button>
                             <button id={"basic-form-submit"} id={'logout'} type={"submit"} style={{marginTop: "5px"}} onClick={this.logout}>注销</button>
                         </form>:
                             <form id={"basic-form"}>
@@ -414,16 +281,16 @@ export default class MessageBroad extends React.Component{
                                         type={"submit"}
                                         class={'loginss'}
                                         onClick={this.login}>登录</button>
-                                <button id={"basic-form-submit"} id={'reg'} type={"submit"} style={{marginTop: "10px"}} onClick={this.openModal}>没有账号？点此注册</button>
+                                <button id={"basic-form-submit"} id={'reg'} type={"submit"} style={{marginTop: "10px"}} onClick={this.props.open_reg_modal}>没有账号？点此注册</button>
                             </form>}
 
                     </section>
 
-                    {this.state.loginFlag?<div></div>:
+                    {this.props.loginFlag?<div></div>:
                         <div>
                             <button id={"basic-form-submit"}
                                     className={"btn-vister"}
-                                    onClick={this.openModal3}>
+                                    onClick={this.props.open_vsrdeskpush_modal}>
                                 游客免登录发言
                             </button>
                         </div>}
@@ -431,15 +298,15 @@ export default class MessageBroad extends React.Component{
                     <button id={"basic-form-submit"} className={"btn-vister"} style={{visibility:'hidden',marginTop:'30px',marginBottom:'50px'}}>游客免登录发言</button>
 
                     <Modal
-                        isOpen={this.state.modalIsOpen}
-                        onRequestClose={this.closeModal}
+                        isOpen={this.props.regModal}
+                        onRequestClose={this.props.close_reg_modal}
                         style={customStyles}
                         contentLabel="Example Modal"
                     >
 
                         <div style={{fontSize:'40px',fontWeight:'bold'}}>注册</div>
                         <form>
-                            <img height={64} width={64} src={this.state.avatar_select}/>请选择头像：
+                            <img height={64} width={64} src={this.getAvator(this.props.avatar_select)}/>请选择头像：
                             <select
                                 ref={ref => {this.avatar=ref;}}
                                 onChange={this.selectChange}>
@@ -473,30 +340,30 @@ export default class MessageBroad extends React.Component{
                             </div>
 
                             <button onClick={this.userReg}>注册</button>
-                            <button onClick={this.closeModal}>取消</button>
+                            <button onClick={this.props.close_reg_modal}>取消</button>
 
                         </form>
                     </Modal>
 
                     <Modal
-                        isOpen={this.state.modalIsOpen4}
-                        onRequestClose={this.closeModal4}
+                        isOpen={this.props.updateModal}
+                        onRequestClose={this.props.close_update_modal}
                         style={customStyles}
                         contentLabel="Example Modal"
                     >
 
                         <div style={{fontSize:'40px',fontWeight:'bold'}}>更改个人信息</div>
                         <form>
-                            <img height={64} width={64} src={this.state.user_avatar}/>请选择更改的头像：
+                            <img height={64} width={64} src={this.getAvator(this.props.user_avatar)}/>请选择更改的头像：
                             <select
-                                value={this.state.user_data[0].avatar}
+                                value={this.props.user_data[0].avatar}
                                 ref={ref => {this.userChange_avatar=ref;}}
 
                                 onChange={(e) => {
                                     this.selectChangeccc()
-                                    let datas=this.state.user_data;
+                                    let datas=this.props.user_data.slice(0);
                                     datas[0].avatar=e.target.value;
-                                    this.setState({user_data:datas});
+                                    this.props.change_user_data(datas)
                                 }}>
                                 <option value ={"alpaca1"}>alpaca1</option>
                                 <option value ={"alpaca2"}>alpaca2</option>
@@ -509,36 +376,36 @@ export default class MessageBroad extends React.Component{
                             <div className={"form-group"}>
                                 <input type={"text"} id={"basic-form-first-name"} placeholder={"更改用户名"}
                                        ref={ref => {this.userChange_username=ref;}}
-                                       value={this.state.user_data[0].username}
+                                       value={this.props.user_data[0].username}
                                        onChange={(e) => {
-                                           let datas=this.state.user_data;
+                                           let datas=this.props.user_data.slice(0);
                                            datas[0].username=e.target.value;
-                                           this.setState({user_data:datas});
+                                           this.props.change_user_data(datas)
                                        }}/>
                                 <label htmlFor={"basic-form-first-name"}>用户名</label>
                             </div>
                             <div className={"form-group"}>
                                 <input type={"text"} id={"basic-form-last-name"} placeholder={"更改个性签名"}
                                        ref={ref => {this.userChange_signature=ref;}}
-                                       value={this.state.user_data[0].signature}
+                                       value={this.props.user_data[0].signature}
                                        onChange={(e) => {
-                                           let datas=this.state.user_data;
+                                           let datas=this.props.user_data.slice(0);
                                            datas[0].signature=e.target.value;
-                                           this.setState({user_data:datas});
+                                           this.props.change_user_data(datas)
                                        }}/>
                                 <label htmlFor={"basic-form-last-name"}>个性签名</label>
                             </div>
 
                             <button onClick={this.updateUserInfo}>确认更改</button>
-                            <button onClick={this.closeModal4}>取消</button>
+                            <button onClick={this.props.close_update_modal}>取消</button>
 
                         </form>
                     </Modal>
 
 
                     <Modal
-                        isOpen={this.state.modalIsOpen2}
-                        onRequestClose={this.closeModal2}
+                        isOpen={this.props.pushModal}
+                        onRequestClose={this.props.close_push_modal}
                         style={customStyles}
                         contentLabel="Example Modal"
                     >
@@ -555,15 +422,15 @@ export default class MessageBroad extends React.Component{
 
 
                             <button onClick={()=>this.publishMessage()} id={'publish'}>发言</button>
-                            <button onClick={this.closeModal2} style={{marginTop:'5px'}}>取消</button>
+                            <button onClick={this.props.close_push_modal} style={{marginTop:'5px'}}>取消</button>
 
                         </form>
                     </Modal>
 
 
                     <Modal
-                        isOpen={this.state.modalIsOpen3}
-                        onRequestClose={this.closeModal3}
+                        isOpen={this.props.vsrDeskPushModal}
+                        onRequestClose={this.props.close_vsrdeskpush_modal}
                         style={customStyles}
                         contentLabel="Example Modal"
                     >
@@ -592,7 +459,7 @@ export default class MessageBroad extends React.Component{
 
 
                             <button onClick={()=>this.vsr_publishMessage()} id={'msgfayan'}>发言</button>
-                            <button onClick={this.closeModal3} style={{marginTop:'5px'}} id={'nomsgfayan'}>取消</button>
+                            <button onClick={this.props.close_vsrdeskpush_modal} style={{marginTop:'5px'}} id={'nomsgfayan'}>取消</button>
 
                         </form>
                     </Modal>
@@ -601,7 +468,7 @@ export default class MessageBroad extends React.Component{
 
                 <div className={"msg_main"}>
                     <div className={"msg_main_list"}>
-                        {this.state.message_data.length>0?this.state.message_data.map((item,index)=>(
+                        {this.props.message_data.length>0?this.props.message_data.map((item,index)=>(
                             <div className={"item"}>
                                 <img className={"msg_pic"} src={this.getAvator(item.user_avatar)}/>
                                 <div className={"msg_right"}>
@@ -640,13 +507,13 @@ export default class MessageBroad extends React.Component{
                     <div>
                         <button id={"basic-form-submit"}
                                 className={"btn-vister"}
-                                onClick={this.openModal5}>
+                                onClick={this.props.open_vsrpush_modal}>
                             游客免登录发言
                         </button>
                     </div>
                     <div className={"mo-msg_main_list"}>
 
-                        {this.state.message_data.length>0?this.state.message_data.map((item,index)=>(
+                        {this.props.message_data.length>0?this.props.message_data.map((item,index)=>(
 
                         <div className={"item"}>
                             <img className={"mo-msg_pic"} src={this.getAvator(item.user_avatar)}/>
@@ -661,8 +528,8 @@ export default class MessageBroad extends React.Component{
 
 
                         <Modal
-                            isOpen={this.state.modalIsOpen5}
-                            onRequestClose={this.closeModal5}
+                            isOpen={this.props.vsrPushModal}
+                            onRequestClose={this.props.close_vsrpush_modal}
                             style={customStyles2}
                             contentLabel="Example Modal"
                         >
@@ -691,7 +558,7 @@ export default class MessageBroad extends React.Component{
 
 
                                 <button onClick={()=>this.vsr_publishMessage()}>发言</button>
-                                <button onClick={this.closeModal5} style={{marginTop:'5px'}}>取消</button>
+                                <button onClick={this.props.close_vsrpush_modal} style={{marginTop:'5px'}}>取消</button>
 
                             </form>
                         </Modal>
@@ -702,3 +569,63 @@ export default class MessageBroad extends React.Component{
     }
 
 }
+
+const mapStateToProps=(state)=> {
+    return{
+        regModal:state.messagebroad.regModal,
+        pushModal:state.messagebroad.pushModal,
+        vsrDeskPushModal:state.messagebroad.vsrDeskPushModal,
+        updateModal:state.messagebroad.updateModal,
+        vsrPushModal:state.messagebroad.vsrPushModal,
+
+
+        avatar_select:state.messagebroad.avatar_select,
+        user_avatar:state.messagebroad.user_avatar,
+
+        loginFlag:state.messagebroad.loginFlag,
+
+        user_data:state.messagebroad.user_data,
+
+        message_data:state.messagebroad.message_data,
+    }
+}
+
+const mapDispatchToProps=(dispatch)=> {
+    return{
+        open_reg_modal:bindActionCreators(open_reg_modal,dispatch),
+        close_reg_modal:bindActionCreators(close_reg_modal,dispatch),
+        open_push_modal:bindActionCreators(open_push_modal,dispatch),
+        close_push_modal:bindActionCreators(close_push_modal,dispatch),
+        open_vsrdeskpush_modal:bindActionCreators(open_vsrdeskpush_modal,dispatch),
+        close_vsrdeskpush_modal:bindActionCreators(close_vsrdeskpush_modal,dispatch),
+        open_update_modal:bindActionCreators(open_update_modal,dispatch),
+        close_update_modal:bindActionCreators(close_update_modal,dispatch),
+        open_vsrpush_modal:bindActionCreators(open_vsrpush_modal,dispatch),
+        close_vsrpush_modal:bindActionCreators(close_vsrpush_modal,dispatch),
+
+        change_avatar_select:bindActionCreators(change_avatar_select,dispatch),
+        change_user_avatar:bindActionCreators(change_user_avatar,dispatch),
+
+        check_login_state:bindActionCreators(check_login_state,dispatch),
+        logins:bindActionCreators(logins,dispatch),
+        logouts:bindActionCreators(logouts,dispatch),
+
+        vsr_push_message:bindActionCreators(vsr_push_message,dispatch),
+
+        push_message:bindActionCreators(push_message,dispatch),
+
+        reg:bindActionCreators(reg,dispatch),
+
+
+        change_user_data:bindActionCreators(change_user_data,dispatch),
+
+
+        update_user_data:bindActionCreators(update_user_data,dispatch)
+
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(MessageBroad);

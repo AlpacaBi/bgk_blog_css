@@ -3,6 +3,9 @@ import {combineReducers} from 'redux'
 import home from './HomeReducer'
 import weekshare from './WeekShareReudcer'
 import article from './ArticleReducer'
+import weeksharecontent from './WeekShareContentReducer'
+import messagebroad from './MessageBroadReducer'
+import articlecontent from './ArticleContentReudcer'
 
 
 
@@ -10,5 +13,8 @@ import article from './ArticleReducer'
 export default combineReducers({
     home,
     weekshare,
-    article
+    article,
+    weeksharecontent,
+    messagebroad,
+    articlecontent
 })

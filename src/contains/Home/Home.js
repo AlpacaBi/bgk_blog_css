@@ -1,17 +1,16 @@
 import React from 'react'
 import '../../css/Home/Home.css'
 import Modal from 'react-modal';
-import {connect} from 'react-redux'
+
 import pic_touxiang from '../../images/touxiang.png'
 import cao from '../../images/caonima.gif'
 import two from '../../images/two.jpg'
 import pay from '../../images/pay.png'
 import loading from '../../images/loading.gif'
 
-
+import {connect} from 'react-redux'
 import {actions} from "../../reducers/HomeReducer";
 import {bindActionCreators} from 'redux'
-import home from "../../reducers/HomeReducer";
 const {home_article_data,open_info_model,close_info_model,open_pay_model,close_pay_model} =actions
 
 

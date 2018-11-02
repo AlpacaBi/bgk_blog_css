@@ -3,9 +3,18 @@ import '../../css/Article/Article.css'
 import {withRouter} from 'react-router-dom'
 import Select from 'react-select'
 
-import {get} from '../../ajax/index'
 
 import loading from '../../images/loading.gif'
+
+
+import {connect} from 'react-redux'
+import {actions} from "../../reducers/ArticleReducer";
+import {bindActionCreators} from 'redux'
+import article from "../../reducers/ArticleReducer";
+const {get_article_list_data,set_select_all_list,set_select_list} =actions
+
+
+
 
 const options = [
     { value: 'all', label: '所有文章' },
@@ -22,20 +31,12 @@ const options = [
 
 
 
-export default class Article extends React.Component{
+class Article extends React.Component{
 
-    constructor(props){
-        super(props);
-        this.state=({
-            ArticleListData:[],
-            selectedOption: null,
-            searstate:false
-        })
-    }
 
     componentDidMount(){
-        this.getArticleListData('all');
-        this.setState({selectedOption:{ value: 'all', label: '所有文章' }})
+        this.props.get_article_list_data('all');
+        this.props.set_select_all_list()
     }
 
     getArticle=(id)=>{
@@ -67,17 +68,11 @@ export default class Article extends React.Component{
         return typen
     }
 
-    getArticleListData=(tabid)=>{
-        get('/getArticleList?tabid='+tabid)
-            .then((res)=>this.setState({
-            data:res
-        }))
-    }
 
 
     handleChange = (selectedOption) => {
-        this.setState({ selectedOption });
-        this.getArticleListData(selectedOption.value);
+        this.props.set_select_list({ selectedOption });
+        this.props.get_article_list_data(selectedOption.value);
     }
 
 
@@ -86,7 +81,7 @@ export default class Article extends React.Component{
 
     render(){
 
-        const { selectedOption } = this.state;
+        const { selectedOption } = this.props;
 
 
         return(
@@ -96,37 +91,37 @@ export default class Article extends React.Component{
                     <div className={"article_sidebar_type_name"}>分类</div>
                     <div className={"title_list"}>
                         <div className={"title_list_item"}
-                             onClick={()=>this.getArticleListData('all')}
+                             onClick={()=>this.props.get_article_list_data('all')}
                              id={'aall'}>所有文章</div>
                         <div className={"title_list_item"}
-                             onClick={()=>this.getArticleListData('javascript')}
+                             onClick={()=>this.props.get_article_list_data('javascript')}
                              id={'ajavascript'}>JavaScript和ES6</div>
                         <div className={"title_list_item"}
-                             onClick={()=>this.getArticleListData('htmlcss')}
+                             onClick={()=>this.props.get_article_list_data('htmlcss')}
                              id={'ahtmlcss'}>HTML&CSS</div>
                         <div className={"title_list_item"}
-                             onClick={()=>this.getArticleListData('react')}
+                             onClick={()=>this.props.get_article_list_data('react')}
                              id={'areact'}>React</div>
                         <div className={"title_list_item"}
-                             onClick={()=>this.getArticleListData('vue')}
+                             onClick={()=>this.props.get_article_list_data('vue')}
                              id={'avue'}>Vue</div>
                         <div className={"title_list_item"}
-                             onClick={()=>this.getArticleListData('angular')}
+                             onClick={()=>this.props.get_article_list_data('angular')}
                              id={'aangular'}>Angular</div>
                         <div className={"title_list_item"}
-                             onClick={()=>this.getArticleListData('java')}
+                             onClick={()=>this.props.get_article_list_data('java')}
                              id={'ajava'}>Java和Java框架</div>
                         <div className={"title_list_item"}
-                             onClick={()=>this.getArticleListData('cpp')}
+                             onClick={()=>this.props.get_article_list_data('cpp')}
                              id={'acpp'}>C和C++</div>
                         <div className={"title_list_item"}
-                             onClick={()=>this.getArticleListData('data')}
+                             onClick={()=>this.props.get_article_list_data('data')}
                              id={'adata'}>数据结构和算法</div>
                         <div className={"title_list_item"}
-                             onClick={()=>this.getArticleListData('other')}
+                             onClick={()=>this.props.get_article_list_data('other')}
                              id={'aother'}>其他杂碎</div>
                         <div className={"title_list_item"}
-                             onClick={()=>this.getArticleListData('all')}style={{visibility:'hidden'}}>...</div>
+                             onClick={()=>this.props.get_article_list_data('all')}style={{visibility:'hidden'}}>...</div>
                     </div>
                 </div>
 
@@ -135,7 +130,7 @@ export default class Article extends React.Component{
 
                 <div className={"article_main"}>
                     <div className={"article_main_list"}>
-                        {this.state.ArticleListData.length>0?this.state.ArticleListData.map((item,index)=>(
+                        {this.props.ArticleListData.length>0?this.props.ArticleListData.map((item,index)=>(
                             <div className={"item"} onClick={()=>this.getArticle(item.ID)} key={index}>
                                 <a  className={"title"} >{item.article_title}</a>
                                 <div className={"status"}>发布于：{item.article_push_time} | 分类：{this.typename(item.article_type)}</div>
@@ -155,11 +150,11 @@ export default class Article extends React.Component{
                         value={selectedOption}
                         onChange={this.handleChange}
                         options={options}
-                        isSearchable={this.state.searstate}
+                        isSearchable={this.props.searstate}
                     />
 
                     <div className={"article-list"}>
-                        {this.state.ArticleListData.length>0?this.state.ArticleListData.map((item,index)=>(
+                        {this.props.ArticleListData.length>0?this.props.ArticleListData.map((item,index)=>(
                         <div className={"item"} onClick={()=>this.getArticle(item.ID)} key={index}>
                             <a className={"title"}>{item.article_title}</a>
                             <div className={"status"}>发布于：{item.article_push_time} | 分类：{this.typename(item.article_type)}</div>
@@ -187,4 +182,25 @@ export default class Article extends React.Component{
 }
 
 withRouter(Article)
+
+const mapStateToProps=(state)=> {
+    return{
+        ArticleListData:state.article.ArticleListData,
+        selectedOption:state.article.selectedOption,
+        searstate:state.article.searstate
+    }
+}
+
+const mapDispatchToProps=(dispatch)=> {
+    return{
+        get_article_list_data:bindActionCreators(get_article_list_data,dispatch),
+        set_select_all_list:bindActionCreators(set_select_all_list,dispatch),
+        set_select_list:bindActionCreators(set_select_list,dispatch),
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Article);
 

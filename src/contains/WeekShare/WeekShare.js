@@ -4,7 +4,6 @@ import {connect} from 'react-redux'
 import '../../css/WeekShare/WeekShare.css'
 import loading from '../../images/loading.gif'
 import {withRouter} from "react-router-dom";
-import {get} from '../../ajax/index'
 
 
 import {actions} from "../../reducers/WeekShareReudcer";
