@@ -65,6 +65,7 @@ class Home extends React.Component{
     }
 
 
+
     render(){
         return(
             <div>
@@ -78,7 +79,7 @@ class Home extends React.Component{
                         </div>
                         <div className={"contant"}>
                             <div >工作微信：</div>
-                            <span><b id={"fui-weixin"} onClick={this.props.open_pay_model}>workbiguokang</b></span>
+                            <span><b id={"fui-weixin"} onClick={this.props.open_info_model}>workbiguokang</b></span>
 
                             <div>工作邮箱：</div>
                             <span><b id={"fui-mailbox"} onClick={this.props.home_article_data}>biguokang@outlook.com</b></span>

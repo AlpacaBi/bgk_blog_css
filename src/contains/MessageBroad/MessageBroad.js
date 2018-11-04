@@ -185,7 +185,14 @@ class MessageBroad extends React.Component{
         }
 
 
-        this.props.reg(data)
+        if(avatar.length>0&&username.length>0&&email.length>0&&password.length>0&&signature.length>0){
+            this.props.reg(data)
+        }else{
+            alert('你漏了一些空没填，必须全填上哦')
+        }
+
+
+
 
 
 

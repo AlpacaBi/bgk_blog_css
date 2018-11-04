@@ -53,8 +53,8 @@ export function* loginFlow () {
 export function* logoutFlow () {
     while (true){
         yield take(MessageBroadTypes.LOGOUT);
-        yield call(get,'/userLogOut');
-        yield alert('您已注销')
+        let res = yield call(get,'/userLogOut');
+        yield alert(res.message)
         yield getUserLoginState()
     }
 }
@@ -97,8 +97,8 @@ export function* updateUserDataFlow () {
 export function* reg() {
     while (true){
         let req=yield take(MessageBroadTypes.REG);
-        yield call(post,'/userReg',req.data);
-        yield alert('注册成功！！')
+        let res=yield call(post,'/userReg',req.data);
+        yield alert(res.message)
         yield put({type:MessageBroadTypes.CLOSE_REG_MODAL})
 
     }

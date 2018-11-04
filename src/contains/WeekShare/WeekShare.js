@@ -68,14 +68,24 @@ class WeekShare extends React.Component{
                                 </div>
                             </div>
                     </div>
-                    )):<div style={{width:'100%',textAlign:'center',paddingTop:'25px'}}><img src={loading} width={'25%'}/></div>}
+                    )):
+
+                        <div className={"share_content_back"}>
+                            <div className={"share_context"}>
+                                <div style={{textAlign:'center',margin:'20px',color:'black',padding:'30px',fontSize:'20px'}}>
+                                    写这个东西，是因为当今是个快节奏的世界，很多东西稍瞬即逝，也许你今天学的东西，几年后就是过时的技术。为了不被这个世界落下，我们必须接受新事物和新思想，同时也要了解过去，所以通过写每周分享，来总结我这周以来，究竟了解到了什么资讯、世界动态和思想。
+                                    <br/><br/>
+
+                                    <div style={{fontSize:'40px'}}><b>Keep Learning，Keep Knowing，Keep Walking</b></div>
+                                </div>
+                            </div>
+                        </div>
+                        }
 
                 </div>
             </div>
 
-
                 <div className={'mo-week'}>
-
                     <div className={"share_text"}>
                         这里记录过去一周，我看到的值得分享的东西，每周日发布
                     </div>
