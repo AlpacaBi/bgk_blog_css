@@ -81,7 +81,6 @@ class WeekShare extends React.Component{
                             </div>
                         </div>
                         }
-
                 </div>
             </div>
 
@@ -123,6 +122,7 @@ const mapDispatchToProps=(dispatch)=> {
         get_share_list_data:bindActionCreators(get_share_list_data,dispatch),
     }
 }
+
 
 export default connect(
     mapStateToProps,
