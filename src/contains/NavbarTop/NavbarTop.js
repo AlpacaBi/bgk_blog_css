@@ -17,6 +17,7 @@ export default class NavbarTop extends React.Component{
                         <li><NavLink to={'/messagebroad'} id={'fui-messageborad'}><div>交流区</div></NavLink></li>
                         <li><NavLink to={'/weekshare'} id={'fui-weekshare'}><div>每周分享</div></NavLink></li>
                         <li><NavLink to={'/lab'} id={'fui-lab'}><div>实验室</div></NavLink></li>
+                        <li  id={'fui-lab'}><a href={"http://gayhub.fun"} target={"_blank"}>Gayhub♂</a></li>
                     </ul>
                 </div>
 
