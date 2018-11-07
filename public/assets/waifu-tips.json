@@ -1,4 +1,5 @@
 {
+
     "mouseover": [
         {
             "selector": ".container a[href^='http']",
@@ -31,6 +32,10 @@
         {
             "selector": "#fui-lab",
             "text": ["这里有一堆稀奇古怪的东西"]
+        },
+        {
+            "selector": "#fui-gayhub",
+            "text": ["主人搭建的免费代码共享库，欢迎大家来使用！！！！"]
         },
         {
             "selector": "#fui-backstage",
