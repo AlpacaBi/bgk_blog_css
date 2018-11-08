@@ -10,14 +10,14 @@ export default class NavbarTop extends React.Component{
         return(
             <div>
                 <div className={'header'}>
-                    <div className={'logo'}>毕国康的个人博客</div>
+                    <div className={'logo'}>Alpaca Bi的个人博客</div>
                     <ul className={'navbar'}>
                         <li><NavLink to={'/'} id={'fui-home'}><div>首页</div></NavLink></li>
                         <li><NavLink to={'/article'} id={'fui-article'}><div>文章</div></NavLink></li>
                         <li><NavLink to={'/messagebroad'} id={'fui-messageborad'}><div>交流区</div></NavLink></li>
                         <li><NavLink to={'/weekshare'} id={'fui-weekshare'}><div>每周分享</div></NavLink></li>
                         <li><NavLink to={'/lab'} id={'fui-lab'}><div>实验室</div></NavLink></li>
-                        <li  id={'fui-lab'}><a href={"http://gayhub.fun"} target={"_blank"}>Gayhub♂</a></li>
+                        <li  id={'fui-gayhub'}><a href={"http://gayhub.fun"} target={"_blank"}>Gayhub♂</a></li>
                     </ul>
                 </div>
 
