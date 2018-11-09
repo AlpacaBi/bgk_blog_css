@@ -22,7 +22,7 @@ export default class NavbarTop extends React.Component{
                 </div>
 
                 <div className={"mo-header"}>
-                    <div className={'mo-logo'}>毕国康的个人博客</div>
+                    <div className={'mo-logo'}>Alpaca Bi的个人博客</div>
                 </div>
             </div>
 

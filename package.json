@@ -42,5 +42,15 @@
   },
   "devDependencies": {
     "react-select": "^2.1.0"
+  },
+  "proxy": {
+    "/apis": {
+      "target": "http://localhost:8888",
+      "changeOrigin": true,
+      "pathRewrite": {
+        "^/apis": "/"
+      }
+    }
   }
+
 }
