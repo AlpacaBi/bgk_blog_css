@@ -117,7 +117,8 @@ class MessageBroad extends React.Component{
 
 
 /**************************发表新留言**************************************************************/
-    publishMessage=()=>{
+    publishMessage=(e)=>{
+        e.preventDefault()
         let userID=this.props.user_data[0].ID
         let username=this.props.user_data[0].username
         let avatar=this.props.user_data[0].avatar
@@ -142,7 +143,8 @@ class MessageBroad extends React.Component{
     }
 
 
-    vsr_publishMessage=()=>{
+    vsr_publishMessage=(e)=>{
+        e.preventDefault()
         let username=this.vsr_username.value
         let email=this.vsr_email.value
         let message=this.vsr_message.value
@@ -163,8 +165,8 @@ class MessageBroad extends React.Component{
 
 
 /**************************用户注册**************************************************************/
-    userReg=()=>{
-
+    userReg=(e)=>{
+        e.preventDefault()
         let avatar=this.avatar.value
         let signature=this.user_signature.value
         let username=this.user_username.value
@@ -200,7 +202,8 @@ class MessageBroad extends React.Component{
     }
 
 /**************************用户登陆**************************************************************/
-    login=()=>{
+    login=(e)=>{
+        e.preventDefault()
         let username=this.login_username.value
         let pass=this.login_password.value
         let md=forge.md.md5.create();
@@ -221,13 +224,15 @@ class MessageBroad extends React.Component{
 
 
 /**************************用户注销**************************************************************/
-    logout=()=>{
+    logout=(e)=>{
+        e.preventDefault()
         this.props.logouts()
     }
 
 
 /**************************更改用户信息**************************************************************/
-    updateUserInfo=()=>{
+    updateUserInfo=(e)=>{
+        e.preventDefault()
         let id=this.props.user_data[0].ID
         let avatar=this.userChange_avatar.value
         let signature=this.userChange_signature.value
@@ -268,9 +273,9 @@ class MessageBroad extends React.Component{
                             <h2>{this.props.user_data[0].username}</h2>
                             <h4>{this.props.user_data[0].email}</h4>
                             <h5 style={{color:'grey'}}>{this.props.user_data[0].signature}</h5>
-                            <button id={"basic-form-submit"} id={'wirtemessage'} type={"submit"} style={{marginTop: "10px"}} onClick={this.props.open_push_modal}>写留言</button>
-                            <button id={"basic-form-submit"} id={'updateinfo'}type={"submit"} style={{marginTop: "5px"}} onClick={this.props.open_update_modal}>更改个人信息</button>
-                            <button id={"basic-form-submit"} id={'logout'} type={"submit"} style={{marginTop: "5px"}} onClick={this.logout}>注销</button>
+                            <button id={"basic-form-submit"} id={'wirtemessage'} style={{marginTop: "10px"}} onClick={this.props.open_push_modal}>写留言</button>
+                            <button id={"basic-form-submit"} id={'updateinfo'} style={{marginTop: "5px"}} onClick={this.props.open_update_modal}>更改个人信息</button>
+                            <button id={"basic-form-submit"} id={'logout'} style={{marginTop: "5px"}} onClick={this.logout}>注销</button>
                         </form>:
                             <form id={"basic-form"}>
                                 <img src={who} width={"80%"} style={{borderRadius: "100%"}}/>
@@ -285,10 +290,9 @@ class MessageBroad extends React.Component{
                                     <label htmlFor={"basic-form-last-name"}>密码</label>
                                 </div>
                                 <button id={"basic-form-submit"}
-                                        type={"submit"}
                                         class={'loginss'}
                                         onClick={this.login}>登录</button>
-                                <button id={"basic-form-submit"} id={'reg'} type={"submit"} style={{marginTop: "10px"}} onClick={this.props.open_reg_modal}>没有账号？点此注册</button>
+                                <button id={"basic-form-submit"} id={'reg'} style={{marginTop: "10px"}} onClick={this.props.open_reg_modal}>没有账号？点此注册</button>
                             </form>}
 
                     </section>
@@ -346,7 +350,7 @@ class MessageBroad extends React.Component{
                                 <label htmlFor={"basic-form-last-name"}>个性签名</label>
                             </div>
 
-                            <button onClick={this.userReg}>注册</button>
+                            <button onClick={(e)=>this.userReg(e)}>注册</button>
                             <button onClick={this.props.close_reg_modal}>取消</button>
 
                         </form>
@@ -428,7 +432,7 @@ class MessageBroad extends React.Component{
                             </div>
 
 
-                            <button onClick={()=>this.publishMessage()} id={'publish'}>发言</button>
+                            <button onClick={(e)=>this.publishMessage(e)} id={'publish'}>发言</button>
                             <button onClick={this.props.close_push_modal} style={{marginTop:'5px'}}>取消</button>
 
                         </form>
@@ -465,7 +469,7 @@ class MessageBroad extends React.Component{
                             </div>
 
 
-                            <button onClick={()=>this.vsr_publishMessage()} id={'msgfayan'}>发言</button>
+                            <button onClick={(e)=>this.vsr_publishMessage(e)} id={'msgfayan'}>发言</button>
                             <button onClick={this.props.close_vsrdeskpush_modal} style={{marginTop:'5px'}} id={'nomsgfayan'}>取消</button>
 
                         </form>
