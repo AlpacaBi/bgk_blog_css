@@ -6,7 +6,7 @@ http://gayhub.fun (ps.本人不是基佬)
 
 
 # 项目简介
-本项目是我个人网站[Alpaca Bi的个人博客](https:biguokang.cn)的前台源码，基于react开发，使用了create-react-app脚手架创建，该项目目前依然在维护中。想看本项目完整效果，可以访问我的个人网站
+本项目是我个人网站[Alpaca Bi的个人博客](https://biguokang.cn)的前台源码，基于react开发，使用了create-react-app脚手架创建，该项目目前依然在维护中。想看本项目完整效果，可以访问我的个人网站
 
 # 安装与使用方法
 ### 安装过程
