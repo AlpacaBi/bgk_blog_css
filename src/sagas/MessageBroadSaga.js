@@ -98,7 +98,15 @@ export function* reg() {
     while (true){
         let req=yield take(MessageBroadTypes.REG);
         let res=yield call(post,'/userReg',req.data);
+
         yield alert(res.message)
+
+
+        yield call(post,'/userLogin',req.data);
+        yield getUserLoginState()
+
+
+
         yield put({type:MessageBroadTypes.CLOSE_REG_MODAL})
 
     }
