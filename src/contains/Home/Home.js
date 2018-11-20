@@ -82,7 +82,7 @@ class Home extends React.Component{
                             <span><b id={"fui-weixin"} onClick={this.props.open_info_model}>workbiguokang</b></span>
 
                             <div>工作邮箱：</div>
-                            <span><b id={"fui-mailbox"} onClick={this.props.home_article_data}>biguokang@outlook.com</b></span>
+                            <span><b id={"fui-mailbox"} onClick={this.props.home_article_data}>bi@guokang.tech</b></span>
 
                             <div>github：</div>
                             <span><a id={"fui-github"} href={"https://github.com/biguokang"}
@@ -146,7 +146,7 @@ class Home extends React.Component{
                                     <div>工作微信：</div>
                                     <div style={{fontSize:'12px'}}>workbiguokang</div>
                                     <div>工作邮箱：</div>
-                                    <div style={{fontSize:'12px'}}>biguokang@outlook.com</div>
+                                    <div style={{fontSize:'12px'}}>bi@guokang.tech</div>
                                     <div>github：</div>
                                     <div style={{fontSize:'12px',color:'white'}}><a href={"https://github.com/biguokang"}
                                             target={"_blank"}>
