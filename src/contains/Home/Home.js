@@ -1,5 +1,6 @@
 import React from 'react'
 import '../../css/Home/Home.css'
+
 import Modal from 'react-modal';
 
 import pic_touxiang from '../../images/touxiang.png'
@@ -109,8 +110,25 @@ class Home extends React.Component{
                                 </div>
                             )):<div style={{width:'100%',textAlign:'center',paddingTop:'25px'}}><img src={loading} width={'25%'}/></div>}
                         </div>
+
+                        <div className={"home_footer"}>
+                            <div className={"home_footmsg"}>
+                                <div id={"beian"}>
+                                    <a href={"http://www.miitbeian.gov.cn"} target={'_blank'}
+                                       style={{textDecoration:'none',color:'white'}}>网站备案号：粤ICP备17017545号</a>
+                                </div>
+                                <div>
+                                    Created by Alpaca Bi
+                                </div>
+                                <div>
+                                    Copyright©1995-2018 biguokang All rights reserved.
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
+
 
 
                     <Modal

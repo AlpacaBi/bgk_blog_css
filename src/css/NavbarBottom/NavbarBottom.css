@@ -82,7 +82,7 @@
 
 @media screen and (min-width: 769px){
     .footer {
-        display: block;
+        display: none;
     }
     .mo-footer{
         display: none;
