@@ -183,16 +183,25 @@ class Home extends React.Component{
                                 <div className={"comment_name"}>Alpaca Bi</div>
                                 <div className={"comment_time"}>talk and code is cheap,show me the money</div>
                                 <div className={"comment_context"}>
-                                    <div>工作微信：</div>
-                                    <div style={{fontSize:'12px'}}>workbiguokang</div>
-                                    <div>工作邮箱：</div>
-                                    <div style={{fontSize:'12px'}}>bi@guokang.mail</div>
-                                    <div>github：</div>
-                                    <div style={{fontSize:'12px',color:'white'}}><a href={"https://github.com/biguokang"}
-                                            target={"_blank"}>
-                                        https://github.com/biguokang
-                                    </a>
-                                    </div>
+                                    <div className={'information'}><img src={loactIcon} width={16}/>
+                                        <span><b id={"fui-locat"} onClick={this.props.home_article_data}>     <span href="mailto:bi@guokang.tech">Guangzhou,China</span>
+                            </b></span></div>
+
+                                    <div className={'information'}><img src={wechatIcon} width={16}/>
+                                        <span><b id={"fui-weixin"} onClick={this.props.open_info_model}>     workbiguokang</b></span></div>
+
+                                    <div className={'information'}><img src={mailIcon} width={16}/>
+                                        <span><b id={"fui-mailbox"} onClick={this.props.home_article_data}>     <a href="mailto:bi@guokang.tech">bi@guokang.email</a>
+                            </b></span></div>
+
+
+                                    <div className={'information'}><img src={githubIcon} width={16}/>
+                                        <span>  <a id={"fui-github"} href={"https://github.com/biguokang"}
+                                                   target={"_blank"}><b>github.com/biguokang</b></a></span></div>
+
+                                    <div className={'information'}><img src={gitIcon} width={16}/>
+                                        <span>   <a id={"fui-gayhubbb"} href={"http://gayhub.fun/biguokang"}
+                                                    target={"_blank"}><b>gayhub.fun/biguokang</b></a></span></div>
                                 </div>
                             </div>
                         </div>
@@ -216,6 +225,24 @@ class Home extends React.Component{
 
 
                         )):<div style={{width:'100%',textAlign:'center',paddingTop:'10px'}}><img src={loading} width={'50%'}/></div>}
+
+                        <div className={"mo-home_footer"}>
+                            <div className={"home_footmsg"}>
+                                <div id={"beian"}>
+                                    <a href={"http://www.miitbeian.gov.cn"} target={'_blank'}
+                                       style={{textDecoration:'none',color:'white'}}>网站备案号：粤ICP备17017545号</a>
+                                </div>
+                                <div>
+                                    Created by Alpaca Bi
+                                </div>
+                                <div>
+                                    Powered by React
+                                </div>
+                                <div>
+                                    Copyright©1995-2018 by biguokang All rights reserved.
+                                </div>
+                            </div>
+                        </div>
 
                         <div className={"item"} style={{visibility:'hidden'}}>
                             <a className={"title"}>hahahahahaha</a>
