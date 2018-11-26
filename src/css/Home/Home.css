@@ -20,10 +20,12 @@
 
 
 .contant{
-    margin: 15px;
-    border: 2px solid white;
+    margin: 7px;
     color:white;
     background-color: black;
+    -moz-box-shadow:5px 5px 20px black;
+    -webkit-box-shadow:5px 5px 20px black;
+    box-shadow:5px 5px 20px black;
 }
 
 .contant a{
@@ -36,6 +38,7 @@
     height: 100%;
     position:fixed;
     left: 0px;
+    overflow:auto;
 }
 
 .side-bar > * {
@@ -91,25 +94,38 @@
 
 
 .header1 .avatar {
-    margin-top: 25px;
+    margin-top: 5px;
     text-align: center;
-    padding: 0px 20px;
-    -webkit-border-radius: 20%;
-    -moz-border-radius: 20%;
-    border-radius: 100%;
+    padding: 5px 5px;
+    -webkit-border-radius: 15%;
+    -moz-border-radius: 15%;
+    border-radius: 15%;
     width: 100%;
 }
 
 .header1 .logo_name{
     color: white;
     text-align: left;
-    font-size: 25px;
+    font-size: 30px;
 }
 
 .deskhome .intro{
     color: white;
-    font-size: 12px;
+    font-size: 16px;
 }
+
+.deskhome .side-bar .contant a{
+    text-decoration:none
+}
+
+.deskhome .side-bar .information{
+    margin-left: 5%;
+}
+
+.deskhome .side-bar .information:hover{
+    transform: scale(1.2);
+}
+
 
 .deskhome .article-list, .article {
     width:100%;

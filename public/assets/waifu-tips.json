@@ -79,11 +79,15 @@
         },
         {
             "selector": "#fui-github",
-            "text": ["可以给主人的github点个follow么，star个项目也行，谢谢哦"]
+            "text": ["可以给主人的GitHub点个follow么，star个项目也行，谢谢哦"]
         },
         {
-            "selector": "#fui-mailbox",
-            "text": ["主人的联系邮箱，有正经事可以发邮件"]
+            "selector": "#fui-gayhubbb",
+            "text": ["主人自己建的git代码库，和GitHub是同步的！！！！"]
+        },
+        {
+            "selector": "#fui-locat",
+            "text": ["主人目前的所在地！！！"]
         },
         {
             "selector": "#fui-weixin",

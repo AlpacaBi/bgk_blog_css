@@ -20,7 +20,7 @@ export default class NavbarBottom extends React.Component{
                                style={{textDecoration:'none',color:'white'}}>备案号：粤ICP备17017545号</a>
                         </div>
                         <div>
-                            Copyright©1995-2018 biguokang All rights reserved.
+                            Copyright©1995-2018 by biguokang All rights reserved.
                         </div>
                     </div>
                 </div>

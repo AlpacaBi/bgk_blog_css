@@ -9,10 +9,18 @@ import two from '../../images/two.jpg'
 import pay from '../../images/pay.png'
 import loading from '../../images/loading.gif'
 
+import wechatIcon from './wechat.png'
+import mailIcon from './mail.png'
+import loactIcon from './locat.png'
+import githubIcon from './github.png'
+import gitIcon from './git.png'
+
+
 import {connect} from 'react-redux'
 import {actions} from "../../reducers/HomeReducer";
 import {bindActionCreators} from 'redux'
 const {home_article_data,open_info_model,close_info_model,open_pay_model,close_pay_model} =actions
+
 
 
 const customStyles = {
@@ -72,22 +80,33 @@ class Home extends React.Component{
             <div>
 
                 <div width={"100%"} height={"100%"} className={"deskhome"}>
-                <div className={"side-bar"}>
+                <div className="side-bar">
                         <div className={"header1"}>
                             <img id={'touxiang'} className={"avatar"} src={pic_touxiang} width={"80%"} height={"80%"}/>
                             <div id={'homename'} className={"logo_name"}>Alpaca Bi</div>
                             <div id={'homeinfo'} className={"intro"}>talk and code is cheap,show me the money</div>
                         </div>
                         <div className={"contant"}>
-                            <div >工作微信：</div>
-                            <span><b id={"fui-weixin"} onClick={this.props.open_info_model}>workbiguokang</b></span>
 
-                            <div>工作邮箱：</div>
-                            <span><b id={"fui-mailbox"} onClick={this.props.home_article_data}>bi@guokang.tech</b></span>
+                            <div className={'information'}><img src={loactIcon} width={18}/>
+                                <span><b id={"fui-locat"} onClick={this.props.home_article_data}>     <span href="mailto:bi@guokang.tech">Guangzhou,China</span>
+                            </b></span></div>
 
-                            <div>github：</div>
-                            <span><a id={"fui-github"} href={"https://github.com/biguokang"}
-                                     target={"_blank"}><b>https://github.com/biguokang</b></a></span>
+                            <div className={'information'}><img src={wechatIcon} width={18}/>
+                            <span><b id={"fui-weixin"} onClick={this.props.open_info_model}>     workbiguokang</b></span></div>
+
+                            <div className={'information'}><img src={mailIcon} width={18}/>
+                            <span><b id={"fui-mailbox"} onClick={this.props.home_article_data}>     <a href="mailto:bi@guokang.tech">bi@guokang.email</a>
+                            </b></span></div>
+
+
+                            <div className={'information'}><img src={githubIcon} width={18}/>
+                            <span>  <a id={"fui-github"} href={"https://github.com/biguokang"}
+                                     target={"_blank"}><b>github.com/biguokang</b></a></span></div>
+
+                            <div className={'information'}><img src={gitIcon} width={18}/>
+                            <span>   <a id={"fui-gayhubbb"} href={"http://gayhub.fun/biguokang"}
+                                     target={"_blank"}><b>gayhub.fun/biguokang</b></a></span></div>
                         </div>
                 </div>
 
@@ -121,7 +140,10 @@ class Home extends React.Component{
                                     Created by Alpaca Bi
                                 </div>
                                 <div>
-                                    Copyright©1995-2018 biguokang All rights reserved.
+                                    Powered by React
+                                </div>
+                                <div>
+                                    Copyright©1995-2018 by biguokang All rights reserved.
                                 </div>
                             </div>
                         </div>
@@ -164,7 +186,7 @@ class Home extends React.Component{
                                     <div>工作微信：</div>
                                     <div style={{fontSize:'12px'}}>workbiguokang</div>
                                     <div>工作邮箱：</div>
-                                    <div style={{fontSize:'12px'}}>bi@guokang.tech</div>
+                                    <div style={{fontSize:'12px'}}>bi@guokang.mail</div>
                                     <div>github：</div>
                                     <div style={{fontSize:'12px',color:'white'}}><a href={"https://github.com/biguokang"}
                                             target={"_blank"}>

@@ -17,9 +17,16 @@ export default class NavbarTop extends React.Component{
                         <li><NavLink to={'/messagebroad'} id={'fui-messageborad'}><div>交流区</div></NavLink></li>
                         <li><NavLink to={'/weekshare'} id={'fui-weekshare'}><div>每周分享</div></NavLink></li>
                         <li><NavLink to={'/lab'} id={'fui-lab'}><div>实验室</div></NavLink></li>
-                        <li  id={'fui-gayhub'}><a href={"http://gayhub.fun"} target={"_blank"}>GayHub</a></li>
-                        <li  id={'fui-gaymail'}><a href={"http://gaymail.fun"} target={"_blank"}>GayMail</a></li>
-                        <li  id={'fui-gaycloud'}><a href={"http://gaycloud.fun"} target={"_blank"}>GayCloud</a></li>
+                        <div className="dropdown">
+                            <div className={"dropbtn"}>私人项目</div>
+                            <div className="dropdown-content">
+                                <a href={"http://gayhub.fun" } target={"_blank"} id={'fui-gayhub'}>GayHub♂</a>
+                                <a href={"http://gaymail.fun"} target={"_blank"} id={'fui-gaymail'}>GayMail♂</a>
+                                <a href={"http://gaycloud.fun"} target={"_blank"} id={'fui-gaycloud'}>GayCloud♂</a>
+                            </div>
+                        </div>
+
+
                     </ul>
                 </div>
 

@@ -55,6 +55,77 @@
 }
 
 
+
+
+.dropbtn {
+    background-color: black;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+    width: 80px;/*设置块的宽度*/
+    height: 60px;/*设置块的长度*/
+    font-family: Microsoft Yahei;
+    line-height: 50px;/*设置字体在块中的高度*/
+    margin: 2px 0px;/*块里的高宽通过margin设置*/
+    text-align: center;/*字体居中*/
+    font-size: 17px;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 80px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.header .navbar .dropdown-content a {
+    color: black;
+    padding: 12px;
+    text-decoration: none;
+    display: block;
+    line-height: 35px;
+}
+
+.header .navbar .dropdown-content a:hover {background-color: #454545;color:white}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: #454545;
+    height: 60px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .mo-header{
     background-color: black;
     width: 100%;
@@ -65,6 +136,7 @@
     z-index: 99999;
     text-align: center;
 }
+
 
 
 
