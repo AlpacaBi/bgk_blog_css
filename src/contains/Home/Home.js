@@ -19,6 +19,9 @@ import gitIcon from './git.png'
 import {connect} from 'react-redux'
 import {actions} from "../../reducers/HomeReducer";
 import {bindActionCreators} from 'redux'
+
+
+
 const {home_article_data,open_info_model,close_info_model,open_pay_model,close_pay_model} =actions
 
 
@@ -76,6 +79,9 @@ class Home extends React.Component{
 
 
     render(){
+
+
+
         return(
             <div>
 
@@ -113,7 +119,10 @@ class Home extends React.Component{
                     <div className={"caonima"} id={'pypy'} onClick={this.props.open_pay_model}>
                         <img src={cao} width="100%"/>
                         <div style={{textAlign:'center',color:'white'}}>求py交易，点击草泥马即可赞助我</div>
+                      
+
                     </div>
+
 
                 <div className={'mains'}>
                     <div className={'article-list'}>

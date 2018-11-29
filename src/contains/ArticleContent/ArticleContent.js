@@ -223,6 +223,15 @@ class ArticleContent extends React.Component{
                                 <div dangerouslySetInnerHTML={{__html:item.article_context}}
                                      className={"context"}>
                                 </div>
+                                <div className="bdsharebuttonbox">
+                                    <a href="#" className="bds_more" data-cmd="more"></a>
+                                    <a href="#" className="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+                                    <a href="#" className="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+                                    <a href="#" className="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a>
+                                    <a href="#" className="bds_renren" data-cmd="renren" title="分享到人人网"></a>
+                                    <a href="#" className="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+                                </div>
+
                             </div>
                         </div>
                     )):<div style={{width:'100%',textAlign:'center',paddingTop:'25px'}}><img src={loading} width={'25%'}/></div>}}
