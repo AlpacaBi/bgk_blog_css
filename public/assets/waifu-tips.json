@@ -46,6 +46,10 @@
             "text": ["想免费搭建网站（仅限静态页面），点进去吧！！！！"]
         },
         {
+            "selector": "#fui-gayeditor",
+            "text": ["主人搭建的在线markdown编辑器！！！"]
+        },
+        {
             "selector": "#fui-backstage",
             "text": ["点这里就能进入后台了，不过只有毕国康可以进，游客止步！！！"]
         },

@@ -22,7 +22,7 @@ export default class NavbarTop extends React.Component{
                             <div className="dropdown-content">
                                 <a href={"http://gayhub.fun" } target={"_blank"} id={'fui-gayhub'}>GayHub♂</a>
                                 <a href={"http://gaymail.fun"} target={"_blank"} id={'fui-gaymail'}>GayMail♂</a>
-                                <a href={"http://gayeditor.fun"} target={"_blank"} id={'fui-gaycloud'}>GayEditor♂</a>
+                                <a href={"http://gayeditor.fun"} target={"_blank"} id={'fui-gayeditor'}>GayEditor♂</a>
                                 <a href={"http://gaycloud.fun"} target={"_blank"} id={'fui-gaycloud'}>GayCloud♂</a>
                             </div>
                         </div>
