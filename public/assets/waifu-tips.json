@@ -54,6 +54,14 @@
             "text": ["点这里就能进入后台了，不过只有毕国康可以进，游客止步！！！"]
         },
         {
+          "selector": "#fui-onlineresume",
+          "text": ["主人正在找工作，点这里就能看在线动态简历"]
+        },
+        {
+          "selector": "#fui-downloadresume",
+          "text": ["主人正在找工作，点这里可以下载PDF版简历"]
+        },
+        {
             "selector": "#creact",
             "text": ["facebook造的轮子，本博客前端就是基于react开发"]
         },

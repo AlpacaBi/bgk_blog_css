@@ -26,6 +26,13 @@ export default class NavbarTop extends React.Component{
                                 <a href={"http://gaycloud.fun"} target={"_blank"} id={'fui-gaycloud'}>GayCloud♂</a>
                             </div>
                         </div>
+                        <div className="dropdown">
+                            <div className={"dropbtn"} style={{color:'yellow',width:'100px',fontWeight:'bold'}}>↓HR点这里↓</div>
+                            <div className="dropdown-content">
+                                <a href={"http://resume.biguokang.cn" } target={"_blank"} id={'fui-onlineresume'}>在线简历</a>
+                                <a  href="毕国康-本科-前端开发.pdf" download="毕国康-本科-前端开发" id={'fui-downloadresume'}>简历下载</a>
+                            </div>
+                        </div>
 
 
                     </ul>
